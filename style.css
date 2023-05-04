@@ -1,0 +1,45 @@
+/* Change the background color of the page */
+body {
+  background-color: #F5F5F5;
+}
+
+/* Add a border around the app icons */
+.app-icon {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Add a hover effect to the app icons */
+.app-icon:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the app titles */
+.app-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Style the app descriptions */
+.app-description {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Style the download button */
+.download-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.download-button:hover {
+  background-color: #3E8E41;
+}
