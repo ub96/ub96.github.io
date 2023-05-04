@@ -1,45 +1,84 @@
-/* Change the background color of the page */
+/* General styles */
 body {
-  background-color: #F5F5F5;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
 }
 
-/* Add a border around the app icons */
-.app-icon {
-  border: 1px solid #ddd;
-  padding: 10px;
+header {
+	background-color: #333;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
 }
 
-/* Add a hover effect to the app icons */
-.app-icon:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+nav ul {
+	display: flex;
 }
 
-/* Style the app titles */
-.app-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-top: 10px;
+nav li {
+	margin-left: 1rem;
 }
 
-/* Style the app descriptions */
-.app-description {
-  margin-top: 5px;
-  font-size: 0.9rem;
-  color: #666;
+nav a {
+	color: #fff;
+	text-decoration: none;
 }
 
-/* Style the download button */
-.download-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 10px;
+main {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 2rem;
 }
 
-.download-button:hover {
-  background-color: #3E8E41;
+/* Featured section styles */
+.featured {
+	margin-bottom: 3rem;
 }
+
+.app {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.app img {
+	width: 100px;
+	height: 100px;
+	margin-right: 1rem;
+}
+
+.download-btn {
+	background-color: #007aff;
+	color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.download-btn:hover {
+	background-color: #0069d9;
+}
+
+/* Categories section styles */
+.categories ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+}
+
+.categories li {
+	flex-basis: 20%;
+	margin-bottom: 1rem;
+}
+
+.categories a {
+	color: #000;
+	text-decoration: none;
+	background-color: #f2f2f2;
+	padding: 0.5rem;
+	border
