@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>App Store</title>
-    <style>
-      /* Set a background color for the entire page */
-      body {
-        background-color: #f2f2f2;
-      }
-      
-      /* Add a curved border to the main content area */
-      .content {
-        background-color: #ff0000;
-        border-radius: 20px;
-        padding: 20px;
-        margin: 50px;
-      }
-      
-      /* Style the headings */
-      h1 {
-        color: #333;
-        font-size: 36px;
-        margin-bottom: 20px;
-      }
-      
-      h2 {
-        color: #666;
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="content">
-      <h1>Welcome to the App Store</h1>
-      <h2>Discover amazing apps for your device</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis dolor eget risus varius, a bibendum nisl sollicitudin. Vivamus lobortis nisi felis, sed malesuada quam lobortis ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed euismod leo ac purus ullamcorper, sed aliquam lectus eleifend.</p>
-    </div>
-  </body>
+<head>
+	<title>App Store</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<h1>App Store</h1>
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Categories</a></li>
+				<li><a href="#">About Us</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section class="featured">
+			<h2>Featured Apps</h2>
+			<div class="app">
+				<img src="https://via.placeholder.com/150" alt="App Icon">
+				<h3>App Name</h3>
+				<p>Description of the app goes here.</p>
+				<a href="#" class="download-btn">Download</a>
+			</div>
+			<!-- Add more featured apps here -->
+		</section>
+		<section class="categories">
+			<h2>Categories</h2>
+			<ul>
+				<li><a href="#">Category 1</a></li>
+				<li><a href="#">Category 2</a></li>
+				<li><a href="#">Category 3</a></li>
+				<li><a href="#">Category 4</a></li>
+				<li><a href="#">Category 5</a></li>
+			</ul>
+		</section>
+		<!-- Add more sections here -->
+	</main>
+	<footer>
+		<p>&copy; 2023 App Store</p>
+	</footer>
+</body>
 </html>
