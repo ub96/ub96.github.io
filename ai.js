@@ -1,7 +1,13 @@
 const apiKey = "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";
 const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
-async function sendMessage(message) {
+function displayBotReply(reply) {
+  alert("Bot: " + reply);
+}
+
+async function sendMessage() {
+  const userMessage = prompt("User:"); // Use a text box to get user input
+
   const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
@@ -9,21 +15,16 @@ async function sendMessage(message) {
       "Authorization": `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      prompt: message,
+      prompt: userMessage,
       max_tokens: 50  // Adjust the number of tokens as per your needs
     })
   });
 
   const data = await response.json();
-  const reply = data.choices[0].text.trim();
-  return reply;
+  const botReply = data.choices[0].text.trim();
+
+  displayBotReply(botReply);
 }
 
 // Example usage
-async function chat() {
-  const userMessage = "Hello, how are you?";
-  const botReply = await sendMessage(userMessage);
-  console.log("Bot:", botReply);
-}
-
-chat();
+sendMessage();
