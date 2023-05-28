@@ -1,55 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ChatGPT Website</title>
-    <style>
-        .chat-window {
-            width: 400px;
-            height: 500px;
-            border: 1px solid #ccc;
-            overflow-y: scroll;
-            padding: 10px;
-        }
+// Function to prompt the user with a text box and get their input
+function promptInput(message) {
+    return prompt(message);
+}
 
-        .user-message {
-            text-align: right;
-            color: blue;
-        }
+// Function to display an alert message
+function showAlert(message) {
+    alert(message);
+}
 
-        .ai-message {
-            text-align: left;
-            color: green;
-        }
-    </style>
-</head>
-<body>
-    <h1>ChatGPT Website</h1>
+// Function to start the conversation with ChatGPT
+function startChat() {
+    // Prompt the user for their message
+    const userInput = promptInput("Enter your message:");
 
-    <div class="chat-window" id="chatWindow"></div>
+    // Send the user's message to the server
+    const url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+    const data = {
+        'prompt': userInput,
+        'max_tokens': 50,
+        'temperature': 0.7
+    };
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(response => {
+        // Retrieve the generated chatbot response
+        const chatbotResponse = response.choices[0].text.trim();
 
-    <input type="text" id="userInput" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
+        // Display the chatbot response in an alert
+        showAlert("ChatGPT: " + chatbotResponse);
 
-    <script>
-        // Check if the debugger is active
-        function isDebuggerActive() {
-            return !!(window && window.chrome && window.chrome.devtools);
-        }
+        // Start the conversation again
+        startChat();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again.');
+    });
+}
 
-        // Prevent execution when the debugger is active
-        if (isDebuggerActive()) {
-            // Display an error message or disable functionality
-            document.body.innerHTML = '<h2>Website functionality is disabled in debugger mode.</h2>';
-        } else {
-            // OpenAI API Endpoint
-            const apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
-
-            // Your OpenAI API Key
-            const apiKey = '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';
-
-            // Rest of the code...
-            // (Please refer to the previous provided code for the remaining JavaScript logic)
-        }
-    </script>
-</body>
-</html>
+// Start the chat
+startChat();
