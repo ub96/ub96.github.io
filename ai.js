@@ -6,24 +6,31 @@ function displayBotReply(reply) {
 }
 
 async function sendMessage() {
-  const userMessage = prompt("User:"); // Use a text box to get user input
+  while (true) {
+    const userMessage = prompt("User:");
 
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      prompt: userMessage,
-      max_tokens: 50  // Adjust the number of tokens as per your needs
-    })
-  });
+    // Check if the user wants to exit the conversation
+    if (userMessage.toLowerCase() === "exit") {
+      break;
+    }
 
-  const data = await response.json();
-  const botReply = data.choices[0].text.trim();
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        prompt: userMessage,
+        max_tokens: 50
+      })
+    });
 
-  displayBotReply(botReply);
+    const data = await response.json();
+    const botReply = data.choices[0].text.trim();
+
+    displayBotReply(botReply);
+  }
 }
 
 // Example usage
