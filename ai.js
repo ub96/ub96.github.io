@@ -25,13 +25,17 @@ async function sendMessage() {
       })
     });
 
-    const data = await response.json();
+    if (response.ok) {
+      const data = await response.json();
 
-    if (data.choices && data.choices.length > 0) {
-      const botReply = data.choices[0].text.trim();
-      displayBotReply(botReply);
+      if (data && data.choices && data.choices.length > 0) {
+        const botReply = data.choices[0].text.trim();
+        displayBotReply(botReply);
+      } else {
+        console.error("Invalid response from the API");
+      }
     } else {
-      console.error("Invalid response from the API");
+      console.error("Error from the API:", response.status);
     }
   }
 }
