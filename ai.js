@@ -9,7 +9,13 @@ async function sendMessage() {
   while (true) {
     const userMessage = prompt("User:");
 
-    if (userMessage.toLowerCase() === "exit") {
+    if (!userMessage) {
+      break;
+    }
+
+    const lowerCaseMessage = userMessage.toLowerCase();
+
+    if (lowerCaseMessage === "exit") {
       break;
     }
 
