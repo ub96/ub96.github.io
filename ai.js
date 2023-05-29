@@ -1,4 +1,4 @@
-const apiKey = "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";
+const apiKey = "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";
 const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
 function displayBotReply(reply) {
@@ -26,9 +26,13 @@ async function sendMessage() {
     });
 
     const data = await response.json();
-    const botReply = data.choices[0].text.trim();
 
-    displayBotReply(botReply);
+    if (data.choices && data.choices.length > 0) {
+      const botReply = data.choices[0].text.trim();
+      displayBotReply(botReply);
+    } else {
+      console.error("Invalid response from the API");
+    }
   }
 }
 
