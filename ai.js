@@ -1,4 +1,4 @@
-const apiKey = "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";
+const apiKey = "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";
 const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
 function displayBotReply(reply) {
