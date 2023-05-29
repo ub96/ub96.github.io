@@ -9,7 +9,6 @@ async function sendMessage() {
   while (true) {
     const userMessage = prompt("User:");
 
-    // Check if the user wants to exit the conversation
     if (userMessage.toLowerCase() === "exit") {
       break;
     }
