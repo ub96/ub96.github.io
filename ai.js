@@ -1,4 +1,4 @@
-const apiKey = "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";
+const apiKey = "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";
 const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
 
 function displayBotReply(reply) {
@@ -19,29 +19,37 @@ async function sendMessage() {
       break;
     }
 
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        prompt: userMessage,
-        max_tokens: 50
-      })
-    });
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          prompt: userMessage,
+          max_tokens: 50
+        })
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-
-      if (data && data.choices && data.choices.length > 0) {
-        const botReply = data.choices[0].text.trim();
-        displayBotReply(botReply);
-      } else {
-        console.error("Invalid response from the API");
+      if (response.status === 401) {
+        throw new Error("Unauthorized: Invalid API key or insufficient permissions.");
       }
-    } else {
-      console.error("Error from the API:", response.status);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data && data.choices && data.choices.length > 0) {
+          const botReply = data.choices[0].text.trim();
+          displayBotReply(botReply);
+        } else {
+          console.error("Invalid response from the API");
+        }
+      } else {
+        console.error("Error from the API:", response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
     }
   }
 }
