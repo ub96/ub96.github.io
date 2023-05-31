@@ -3,7 +3,33 @@
 <head>
     <title>Chatzi Buddy</title>
     <style>
+        #chatzi-buddy-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background-image: url(chatzi-buddy-icon.png); /* Replace with the URL or file path of your PNG image */
+            background-size: cover;
+            background-position: center;
+        }
+        .menu {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 200px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .menu-option {
+            padding: 10px;
+            cursor: pointer;
+        }
         #chatzi-buddy {
+            display: none;
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -28,11 +54,18 @@
     </style>
 </head>
 <body>
+    <div id="chatzi-buddy-icon"></div>
+
+    <div class="menu">
+        <div class="menu-option" id="menu-chatgpt">Use ChatGPT</div>
+        <div class="menu-option" id="menu-open-chat">Open Chat</div>
+    </div>
+
     <div id="chatzi-buddy">
         <div id="chat-window"></div>
         <input type="text" id="message-box" placeholder="Type your message..." />
     </div>
 
-    <script src="https://ub96.github.io/ai.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
