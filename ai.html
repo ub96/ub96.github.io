@@ -3,22 +3,35 @@
 <head>
     <title>Chatzi Buddy</title>
     <style>
-        #chat-window {
+        #chatzi-buddy {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             width: 400px;
             height: 500px;
             border: 1px solid #ccc;
-            overflow: auto;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        #chat-window {
+            height: 440px;
             padding: 10px;
+            overflow: auto;
         }
         #message-box {
             width: 100%;
             margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
-    <div id="chat-window"></div>
-    <input type="text" id="message-box" placeholder="Type your message..." />
+    <div id="chatzi-buddy">
+        <div id="chat-window"></div>
+        <input type="text" id="message-box" placeholder="Type your message..." />
+    </div>
 
     <script src="https://ub96.github.io/ai.js"></script>
 </body>
