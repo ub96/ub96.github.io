@@ -7,21 +7,18 @@
     </style>
 </head>
 <body>
-    <div id="chatzi-buddy-icon"></div>
+    <div id="chatzi-buddy-icon" onclick="showMenu()"></div>
 
-    <div class="menu">
-        <div class="menu-option" id="menu-chatbox">Chatbox</div>
-        <div class="menu-option" id="menu-chatgpt">ChatGPT</div>
-        <div class="menu-option" id="menu-open-chat">Open Chat</div>
-        <div class="menu-option" id="menu-about">About</div>
+    <div id="menu" style="display: none;">
+        <div class="menu-option" onclick="openChat()">Chatbox</div>
+        <div class="menu-option" onclick="openChatGpt()">ChatGPT</div>
+        <div class="menu-option" onclick="openAbout()">About</div>
     </div>
 
-    <div id="chatzi-buddy">
-        <div id="chat-window"></div>
-        <input type="text" id="message-box" placeholder="Type your message..." />
-    </div>
+    <div id="chat-window" style="display: none;"></div>
+    <input type="text" id="message-box" style="display: none;" placeholder="Type your message..." />
 
-    <div id="chat-gpt-window">
+    <div id="chat-gpt-window" style="display: none;">
         <div id="chat-gpt-window-title">ChatGPT</div>
         <div id="chat-gpt-window-content"></div>
         <div id="chat-gpt-options">
@@ -34,7 +31,7 @@
         <input type="text" id="chat-gpt-message-box" placeholder="Type your message..." />
     </div>
 
-    <div id="about-window">
+    <div id="about-window" style="display: none;">
         <div id="about-window-title">About</div>
         <div id="about-window-content">
             <p>
@@ -50,9 +47,40 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // Existing code for Chatzi Buddy
+        function showMenu() {
+            var menu = document.getElementById("menu");
+            menu.style.display = "block";
+        }
+
+        function hideMenu() {
+            var menu = document.getElementById("menu");
+            menu.style.display = "none";
+        }
+
+        function openChat() {
+            hideMenu();
+
+            var chatWindow = document.getElementById("chat-window");
+            var messageBox = document.getElementById("message-box");
+
+            chatWindow.style.display = "block";
+            messageBox.style.display = "block";
+        }
+
+        function openChatGpt() {
+            hideMenu();
+
+            var chatGptWindow = document.getElementById("chat-gpt-window");
+            chatGptWindow.style.display = "block";
+        }
+
+        function openAbout() {
+            hideMenu();
+
+            var aboutWindow = document.getElementById("about-window");
+            aboutWindow.style.display = "block";
+        }
 
         var chatWindow = document.getElementById("chat-window");
         var messageBox = document.getElementById("message-box");
@@ -73,34 +101,33 @@
             }
         });
 
-        // Existing code for ChatGPT integration
-
-        var chatGptWindow = document.getElementById("chat-gpt-window");
-        var chatGptWindowContent = document.getElementById("chat-gpt-window-content");
-        var chatGptMessageBox = document.getElementById("chat-gpt-message-box");
-        var chatGptResponseTypeSelect = document.getElementById("chat-gpt-response-type");
-
         function showChatGptWindow() {
+            var chatGptWindow = document.getElementById("chat-gpt-window");
             chatGptWindow.style.display = "block";
         }
 
         function hideChatGptWindow() {
+            var chatGptWindow = document.getElementById("chat-gpt-window");
             chatGptWindow.style.display = "none";
         }
 
+        var chatGptMessageBox = document.getElementById("chat-gpt-message-box");
+
         function sendMessageToChatGpt(message) {
-            var responseType = chatGptResponseTypeSelect.value;
+            var chatGptResponseElement = document.getElementById("chat-gpt-window-content");
+            chatGptResponseElement.innerHTML = "";
+
+            var responseTypeElement = document.getElementById("chat-gpt-response-type");
+            var responseType = responseTypeElement.value;
+
             if (responseType === "chatbox") {
-                // Put the generated response directly in the chatbox
                 var receivedMessageElement = document.createElement("div");
                 receivedMessageElement.innerHTML = "<strong>ChatGPT:</strong> " + message;
                 chatWindow.appendChild(receivedMessageElement);
             } else if (responseType === "typing") {
-                // Type out the generated response
-                var charactersPerSecond = 50; // Adjust this value to control typing speed
+                var charactersPerSecond = 50;
                 var delay = (message.length / charactersPerSecond) * 1000;
 
-                // Type out the response character by character
                 var index = 0;
                 var typingInterval = setInterval(function() {
                     messageBox.value += message[index];
@@ -119,15 +146,15 @@
 
         document.getElementById("menu-chatgpt").addEventListener("click", function() {
             hideChatGptWindow();
-            // Code to initiate ChatGPT goes here
-        });
-
-        document.getElementById("menu-open-chat").addEventListener("click", function() {
             showChatGptWindow();
         });
 
+        document.getElementById("menu-open-chat").addEventListener("click", function() {
+            openChat();
+        });
+
         document.getElementById("menu-about").addEventListener("click", function() {
-            document.getElementById("about-window").style.display = "block";
+            openAbout();
         });
 
         chatGptMessageBox.addEventListener("keydown", function(event) {
