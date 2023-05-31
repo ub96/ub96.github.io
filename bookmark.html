@@ -5,6 +5,6 @@ javascript:(function() {
       return response.text();
     })
     .then(function(html) {
-      chatziBuddyWindow.document.write(html);
+      chatziBuddyWindow.document.documentElement.innerHTML = html;
     });
 })();
