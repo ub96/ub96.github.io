@@ -3,54 +3,7 @@
 <head>
     <title>Chatzi Buddy</title>
     <style>
-        #chatzi-buddy-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            background-image: url(https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png); /* Replace with the URL or file path of your PNG image */
-            background-size: cover;
-            background-position: center;
-        }
-        .menu {
-            display: none;
-            position: fixed;
-            bottom: 60px;
-            right: 20px;
-            width: 160px;
-            background-color: white;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        .menu-option {
-            padding: 5px;
-            cursor: pointer;
-        }
-        #chatzi-buddy {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            border: 1px solid #ccc;
-            overflow: hidden;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        #chat-window {
-            height: 340px;
-            padding: 10px;
-            overflow: auto;
-        }
-        #message-box {
-            width: 100%;
-            margin-top: 10px;
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
+        /* CSS styles for Chatzi Buddy and ChatGPT window */
     </style>
 </head>
 <body>
@@ -66,6 +19,100 @@
         <input type="text" id="message-box" placeholder="Type your message..." />
     </div>
 
-    <script src="https://ub96.github.io/ai.js"></script>
+    <div id="chat-gpt-window">
+        <div id="chat-gpt-window-title">ChatGPT</div>
+        <div id="chat-gpt-window-content"></div>
+        <div id="chat-gpt-options">
+            <label for="chat-gpt-response-type">Response Type:</label>
+            <select id="chat-gpt-response-type">
+                <option value="chatbox">Put in Chatbox</option>
+                <option value="typing">Type Out</option>
+            </select>
+        </div>
+        <input type="text" id="chat-gpt-message-box" placeholder="Type your message..." />
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Existing code for Chatzi Buddy
+
+        var chatWindow = document.getElementById("chat-window");
+        var messageBox = document.getElementById("message-box");
+
+        function sendMessage(message) {
+            var sentMessageElement = document.createElement("div");
+            sentMessageElement.innerHTML = "<strong>You:</strong> " + message;
+            chatWindow.appendChild(sentMessageElement);
+        }
+
+        messageBox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                var message = messageBox.value.trim();
+                if (message !== "") {
+                    sendMessage(message);
+                    messageBox.value = "";
+                }
+            }
+        });
+
+        // Existing code for ChatGPT integration
+
+        var chatGptWindow = document.getElementById("chat-gpt-window");
+        var chatGptWindowContent = document.getElementById("chat-gpt-window-content");
+        var chatGptMessageBox = document.getElementById("chat-gpt-message-box");
+        var chatGptResponseTypeSelect = document.getElementById("chat-gpt-response-type");
+
+        function showChatGptWindow() {
+            chatGptWindow.style.display = "block";
+        }
+
+        function hideChatGptWindow() {
+            chatGptWindow.style.display = "none";
+        }
+
+        function sendMessageToChatGpt(message) {
+            var responseType = chatGptResponseTypeSelect.value;
+            if (responseType === "chatbox") {
+                // Put the generated response directly in the chatbox
+                var receivedMessageElement = document.createElement("div");
+                receivedMessageElement.innerHTML = "<strong>ChatGPT:</strong> " + message;
+                chatWindow.appendChild(receivedMessageElement);
+            } else if (responseType === "typing") {
+                // Type out the generated response
+                var charactersPerSecond = 50; // Adjust this value to control typing speed
+                var delay = (message.length / charactersPerSecond) * 1000;
+
+                // Type out the response character by character
+                var index = 0;
+                var typingInterval = setInterval(function() {
+                    messageBox.value += message[index];
+                    index++;
+
+                    if (index >= message.length) {
+                        clearInterval(typingInterval);
+                    }
+                }, delay);
+            }
+        }
+
+        document.getElementById("menu-chatgpt").addEventListener("click", function() {
+            hideChatGptWindow();
+            // Code to initiate ChatGPT goes here
+        });
+
+        document.getElementById("menu-open-chat").addEventListener("click", function() {
+            showChatGptWindow();
+        });
+
+        chatGptMessageBox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                var message = chatGptMessageBox.value.trim();
+                if (message !== "") {
+                    sendMessageToChatGpt(message);
+                    chatGptMessageBox.value = "";
+                }
+            }
+        });
+    </script>
 </body>
 </html>
