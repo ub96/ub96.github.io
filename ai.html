@@ -3,181 +3,79 @@
 <head>
     <title>Chatzi Buddy</title>
     <style>
-        /* CSS styles for Chatzi Buddy and ChatGPT window */
-        #chatzi-buddy-icon {
-            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
-            /* Add additional CSS styles for positioning and sizing of the icon */
+        /* CSS styles for Chatzi Buddy */
+        body {
+            font-family: Arial, sans-serif;
         }
-        /* Rest of the CSS styles... */
+        
+        .chat-container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+        }
+        
+        .user-message {
+            background-color: #d2d2d2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .bot-message {
+            background-color: #c2d6d6;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Add your additional CSS styles for Chatzi Buddy here */
     </style>
+    <script>
+        // JavaScript code for Chatzi Buddy
+        // Add your JavaScript code here
+        
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input');
+            var message = messageInput.value.trim();
+            if (message !== '') {
+                displayMessage(message, 'user');
+                messageInput.value = '';
+                // Code to send user message and receive bot response
+                // Replace this with your logic
+                var botResponse = "Bot response goes here";
+                displayMessage(botResponse, 'bot');
+            }
+        }
+        
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.classList.add('message');
+        
+            var messageContent = document.createTextNode(message);
+            messageContainer.appendChild(messageContent);
+        
+            if (type === 'user') {
+                messageContainer.classList.add('user-message');
+            } else if (type === 'bot') {
+                messageContainer.classList.add('bot-message');
+            }
+        
+            var chatContainer = document.getElementById('chat-container');
+            chatContainer.appendChild(messageContainer);
+        }
+    </script>
 </head>
 <body>
-    <div id="chatzi-buddy-icon" onclick="showMenu()"></div>
-
-    <div id="menu" style="display: none;">
-        <div class="menu-option" onclick="openChat()">Chatbox</div>
-        <div class="menu-option" onclick="openChatGpt()">ChatGPT</div>
-        <div class="menu-option" onclick="openAbout()">About</div>
-    </div>
-
-    <div id="chat-window" style="display: none;"></div>
-    <input type="text" id="message-box" style="display: none;" placeholder="Type your message..." />
-
-    <div id="chat-gpt-window" style="display: none;">
-        <div id="chat-gpt-window-title">ChatGPT</div>
-        <div id="chat-gpt-window-content"></div>
-        <div id="chat-gpt-options">
-            <label for="chat-gpt-response-type">Response Type:</label>
-            <select id="chat-gpt-response-type">
-                <option value="chatbox">Put in Chatbox</option>
-                <option value="typing">Type Out</option>
-            </select>
+    <div class="chat-container">
+        <div id="chat-container" class="chat-container">
+            <!-- Chat messages will be dynamically added here -->
         </div>
-        <input type="text" id="chat-gpt-message-box" placeholder="Type your message..." />
-    </div>
-
-    <div id="about-window" style="display: none;">
-        <div id="about-window-title">About</div>
-        <div id="about-window-content">
-            <p>
-                This is Chatzi Buddy, a helpful chat assistant.
-            </p>
-            <p>
-                The "Chatbox" option allows you to have a conversation using the built-in chatbox.
-            </p>
-            <p>
-                The "ChatGPT" option lets you use ChatGPT, a powerful language model, for generating responses.
-                You can choose whether to put the generated response directly in the chatbox or have it typed out for you.
-            </p>
+        <div>
+            <input id="message-input" type="text" placeholder="Type your message">
+            <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-
-    <script>
-        function showMenu() {
-            var menu = document.getElementById("menu");
-            menu.style.display = "block";
-        }
-
-        function hideMenu() {
-            var menu = document.getElementById("menu");
-            menu.style.display = "none";
-        }
-
-        function openChat() {
-            hideMenu();
-
-            var chatWindow = document.getElementById("chat-window");
-            var messageBox = document.getElementById("message-box");
-
-            chatWindow.style.display = "block";
-            messageBox.style.display = "block";
-        }
-
-        function openChatGpt() {
-            hideMenu();
-
-            var chatGptWindow = document.getElementById("chat-gpt-window");
-            chatGptWindow.style.display = "block";
-        }
-
-        function openAbout() {
-            hideMenu();
-
-            var aboutWindow = document.getElementById("about-window");
-            aboutWindow.style.display = "block";
-        }
-
-        var chatWindow = document.getElementById("chat-window");
-        var messageBox = document.getElementById("message-box");
-
-        function sendMessage(message) {
-            var sentMessageElement = document.createElement("div");
-            sentMessageElement.innerHTML = "<strong>You:</strong> " + message;
-            chatWindow.appendChild(sentMessageElement);
-
-            // You can handle the message and generate a response here
-            var response = "This is the generated response for the message: " + message;
-
-            var receivedMessageElement = document.createElement("div");
-            receivedMessageElement.innerHTML = "<strong>Chatzi Buddy:</strong> " + response;
-            chatWindow.appendChild(receivedMessageElement);
-        }
-
-        messageBox.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                var message = messageBox.value.trim();
-                if (message !== "") {
-                    sendMessage(message);
-                    messageBox.value = "";
-                }
-            }
-        });
-
-        function showChatGptWindow() {
-            var chatGptWindow = document.getElementById("chat-gpt-window");
-            chatGptWindow.style.display = "block";
-        }
-
-        function hideChatGptWindow() {
-            var chatGptWindow = document.getElementById("chat-gpt-window");
-            chatGptWindow.style.display = "none";
-        }
-
-        var chatGptMessageBox = document.getElementById("chat-gpt-message-box");
-
-        function sendMessageToChatGpt(message) {
-            var chatGptResponseElement = document.getElementById("chat-gpt-window-content");
-            chatGptResponseElement.innerHTML = "";
-
-            var responseTypeElement = document.getElementById("chat-gpt-response-type");
-            var responseType = responseTypeElement.value;
-
-            if (responseType === "chatbox") {
-                var receivedMessageElement = document.createElement("div");
-                receivedMessageElement.innerHTML = "<strong>ChatGPT:</strong> " + message;
-                chatWindow.appendChild(receivedMessageElement);
-            } else if (responseType === "typing") {
-                var charactersPerSecond = 50;
-                var delay = (message.length / charactersPerSecond) * 1000;
-
-                var index = 0;
-                var typingInterval = setInterval(function() {
-                    messageBox.value += message[index];
-                    index++;
-
-                    if (index >= message.length) {
-                        clearInterval(typingInterval);
-                    }
-                }, delay);
-            }
-        }
-
-        document.getElementById("menu-chatbox").addEventListener("click", function() {
-            hideChatGptWindow();
-        });
-
-        document.getElementById("menu-chatgpt").addEventListener("click", function() {
-            hideChatGptWindow();
-            showChatGptWindow();
-        });
-
-        document.getElementById("menu-open-chat").addEventListener("click", function() {
-            openChat();
-        });
-
-        document.getElementById("menu-about").addEventListener("click", function() {
-            openAbout();
-        });
-
-        chatGptMessageBox.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                var message = chatGptMessageBox.value.trim();
-                if (message !== "") {
-                    sendMessageToChatGpt(message);
-                    chatGptMessageBox.value = "";
-                }
-            }
-        });
-    </script>
 </body>
 </html>
