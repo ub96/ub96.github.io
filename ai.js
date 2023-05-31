@@ -1,11 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
     var chatziBuddyIcon = document.getElementById("chatzi-buddy-icon");
+    var menu = document.querySelector(".menu");
+    var menuChatGptOption = document.getElementById("menu-chatgpt");
+    var menuOpenChatOption = document.getElementById("menu-open-chat");
     var chatziBuddy = document.getElementById("chatzi-buddy");
     var chatWindow = document.getElementById("chat-window");
     var messageBox = document.getElementById("message-box");
 
     chatziBuddyIcon.addEventListener("click", function() {
+        menu.style.display = "block";
+    });
+
+    menuChatGptOption.addEventListener("click", function() {
+        menu.style.display = "none";
         chatziBuddy.style.display = "block";
+    });
+
+    menuOpenChatOption.addEventListener("click", function() {
+        menu.style.display = "none";
+        chatziBuddy.style.display = "none";
     });
 
     messageBox.addEventListener("keydown", function(event) {
@@ -17,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var response = generateResponse(message);
 
             createChatBubble("chatzi", response);
+
             speak(response); // Speak the response
 
             messageBox.value = "";
