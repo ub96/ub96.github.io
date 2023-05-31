@@ -4,6 +4,11 @@
     <title>Chatzi Buddy</title>
     <style>
         /* CSS styles for Chatzi Buddy and ChatGPT window */
+        #chatzi-buddy-icon {
+            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
+            /* Add additional CSS styles for positioning and sizing of the icon */
+        }
+        /* Rest of the CSS styles... */
     </style>
 </head>
 <body>
@@ -89,6 +94,13 @@
             var sentMessageElement = document.createElement("div");
             sentMessageElement.innerHTML = "<strong>You:</strong> " + message;
             chatWindow.appendChild(sentMessageElement);
+
+            // You can handle the message and generate a response here
+            var response = "This is the generated response for the message: " + message;
+
+            var receivedMessageElement = document.createElement("div");
+            receivedMessageElement.innerHTML = "<strong>Chatzi Buddy:</strong> " + response;
+            chatWindow.appendChild(receivedMessageElement);
         }
 
         messageBox.addEventListener("keydown", function(event) {
