@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var response = generateResponse(message);
 
             createChatBubble("chatzi", response);
+            speak(response); // Speak the response
 
             messageBox.value = "";
         }
@@ -30,6 +31,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         chatWindow.appendChild(bubble);
         chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function speak(text) {
+        var utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
     }
 
     function generateResponse(message) {
