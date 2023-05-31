@@ -10,8 +10,10 @@
     <div id="chatzi-buddy-icon"></div>
 
     <div class="menu">
-        <div class="menu-option" id="menu-chatgpt">Use ChatGPT</div>
+        <div class="menu-option" id="menu-chatbox">Chatbox</div>
+        <div class="menu-option" id="menu-chatgpt">ChatGPT</div>
         <div class="menu-option" id="menu-open-chat">Open Chat</div>
+        <div class="menu-option" id="menu-about">About</div>
     </div>
 
     <div id="chatzi-buddy">
@@ -30,6 +32,22 @@
             </select>
         </div>
         <input type="text" id="chat-gpt-message-box" placeholder="Type your message..." />
+    </div>
+
+    <div id="about-window">
+        <div id="about-window-title">About</div>
+        <div id="about-window-content">
+            <p>
+                This is Chatzi Buddy, a helpful chat assistant.
+            </p>
+            <p>
+                The "Chatbox" option allows you to have a conversation using the built-in chatbox.
+            </p>
+            <p>
+                The "ChatGPT" option lets you use ChatGPT, a powerful language model, for generating responses.
+                You can choose whether to put the generated response directly in the chatbox or have it typed out for you.
+            </p>
+        </div>
     </div>
 
     <script src="script.js"></script>
@@ -95,6 +113,10 @@
             }
         }
 
+        document.getElementById("menu-chatbox").addEventListener("click", function() {
+            hideChatGptWindow();
+        });
+
         document.getElementById("menu-chatgpt").addEventListener("click", function() {
             hideChatGptWindow();
             // Code to initiate ChatGPT goes here
@@ -102,6 +124,10 @@
 
         document.getElementById("menu-open-chat").addEventListener("click", function() {
             showChatGptWindow();
+        });
+
+        document.getElementById("menu-about").addEventListener("click", function() {
+            document.getElementById("about-window").style.display = "block";
         });
 
         chatGptMessageBox.addEventListener("keydown", function(event) {
