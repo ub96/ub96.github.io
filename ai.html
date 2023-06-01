@@ -1,184 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Chatzi Buddy</title>
-    <style>
-        /* CSS styles for Chatzi Buddy */
-        .chatzi-image {
-            width: 200px;
-            height: 200px;
-            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            cursor: pointer;
+function openMenuWindow() {
+  var menuWindow = window.open('', '_blank', 'width=300,height=200');
+  menuWindow.document.write(`
+    <html>
+    <head>
+      <title>Chatzi Buddy Menu</title>
+      <style>
+        /* CSS styles for the menu window */
+        /* Add your CSS styles here */
+        body {
+          padding: 20px;
         }
-        
-        .chat-container {
-            width: 400px;
-            height: 300px;
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 10px;
+
+        h2 {
+          margin-top: 0;
         }
-        
-        .message {
-            margin-bottom: 10px;
+
+        .menu-option button {
+          display: block;
+          width: 100%;
+          margin-bottom: 5px;
         }
-        
-        .message .user-message {
-            font-weight: bold;
-        }
-        
-        .message input[type="text"] {
-            width: 70%;
-            padding: 5px;
-            margin-right: 10px;
-        }
-        
-        .message button {
-            padding: 5px 10px;
-        }
-    </style>
-    <script>
-        // JavaScript code for Chatzi Buddy
-        // Add your JavaScript code here
-        
-        function openMenuWindow() {
-            var menuWindow = window.open('', '_blank', 'width=300,height=200');
-            menuWindow.document.write(`
-                <html>
-                <head>
-                    <title>Chatzi Buddy Menu</title>
-                    <style>
-                        /* CSS styles for the menu window */
-                        /* Add your CSS styles here */
-                        body {
-                            padding: 20px;
-                        }
-                        
-                        h2 {
-                            margin-top: 0;
-                        }
-                        
-                        .menu-option button {
-                            display: block;
-                            width: 100%;
-                            margin-bottom: 5px;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <h2>Menu</h2>
-                    <div class="menu-option">
-                        <button onclick="openChat()">Start Chat</button>
-                    </div>
-                    <div class="menu-option">
-                        <button onclick="openChatGPT()">Chat GPT</button>
-                    </div>
-                    <div class="menu-option">
-                        <button onclick="tellJoke()">Tell a Joke</button>
-                    </div>
-                    <div class="menu-option">
-                        <button onclick="closeChatziBuddy()">Close Chatzi Buddy</button>
-                    </div>
-                </body>
-                </html>
-            `);
-            menuWindow.document.close();
-        }
-        
-        function openChat() {
-            var chatContainer = document.getElementById('chat-container');
-            var chatziContainer = document.getElementById('chatzi-container');
-            
-            chatContainer.style.display = 'block';
-            chatziContainer.style.display = 'none';
-        }
-        
-        function openChatGPT() {
-            var chatGptContainer = document.getElementById('chat-gpt-container');
-            var chatziContainer = document.getElementById('chatzi-container');
-            
-            chatGptContainer.style.display = 'block';
-            chatziContainer.style.display = 'none';
-        }
-        
-        function closeChatziBuddy() {
-            var chatContainer = document.getElementById('chat-container');
-            var chatGptContainer = document.getElementById('chat-gpt-container');
-            var chatziContainer = document.getElementById('chatzi-container');
-            
-            chatContainer.style.display = 'none';
-            chatGptContainer.style.display = 'none';
-            chatziContainer.style.display = 'block';
-        }
-        
-        function sendMessage() {
-            var userInput = document.getElementById('user-input');
-            var chatHistory = document.getElementById('chat-history');
-            
-            var userMessage = userInput.value;
-            var message = document.createElement('div');
-            message.classList.add('message');
-            message.innerHTML = '<span class="user-message">You: </span>' + userMessage;
-            
-            chatHistory.appendChild(message);
-            userInput.value = '';
-        }
-        
-        function tellJoke() {
-            var chatHistory = document.getElementById('chat-history');
-            
-            var joke = "Why don't scientists trust atoms? Because they make up everything!";
-            var message = document.createElement('div');
-            message.classList.add('message');
-            message.innerHTML = '<span class="user-message">Chatzi Buddy: </span>' + joke;
-            
-            chatHistory.appendChild(message);
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            var chatziContainer = document.getElementById('chatzi-container');
-            var chatziImage = document.getElementById('chatzi-image');
-            
-            chatziImage.addEventListener('click', function() {
-                openMenuWindow();
-            });
-            
-            document.addEventListener('contextmenu', function(event) {
-                event.preventDefault();
-                openMenuWindow();
-            });
-            
-            document.addEventListener('keyup', function(event) {
-                if (event.key === '9') {
-                    event.preventDefault();
-                    openMenuWindow();
-                }
-            });
-        });
-    </script>
-</head>
-<body>
-    <div id="chatzi-container">
-        <div id="chatzi-image" class="chatzi-image"></div>
-    </div>
-    
-    <div id="chat-container" class="chat-container" style="display: none;">
-        <div id="chat-history"></div>
-        <div class="message">
-            <input type="text" id="user-input" placeholder="Enter your message...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
-    </div>
-    
-    <div id="chat-gpt-container" class="chat-container" style="display: none;">
-        <div id="chat-history"></div>
-        <div class="message">
-            <input type="text" id="user-input" placeholder="Enter your message...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
-    </div>
-</body>
-</html>
+      </style>
+    </head>
+    <body>
+      <h2>Menu</h2>
+      <div class="menu-option">
+        <button onclick="openChat()">Start Chat</button>
+      </div>
+      <div class="menu-option">
+        <button onclick="openChatGPT()">Chat GPT</button>
+      </div>
+      <div class="menu-option">
+        <button onclick="tellJoke()">Tell a Joke</button>
+      </div>
+      <div class="menu-option">
+        <button onclick="closeChatziBuddy()">Close Chatzi Buddy</button>
+      </div>
+    </body>
+    </html>
+  `);
+  menuWindow.document.close();
+}
+
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault();
+  openMenuWindow();
+});
