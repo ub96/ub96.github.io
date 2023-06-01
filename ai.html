@@ -18,12 +18,36 @@
     }
   </style>
   <script>
+    // Function to make Chatzi Buddy talk
+    function talk(message) {
+      var chatbox = document.getElementById("chatbox");
+      chatbox.value += "Chatzi Buddy: " + message + "\n";
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
     function openChatWindow() {
       window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");
     }
 
     function closeChatziBuddy() {
       window.close();
+    }
+
+    function generateResponse() {
+      // Code to generate a response using ChatGPT or other AI models
+      // ...
+      
+      // Assuming the generated response is stored in a variable called 'response'
+      var response = "This is the generated response";
+
+      var sendToChat = confirm("Send the generated response back to the chat?");
+      if (sendToChat) {
+        talk(response);
+      } else {
+        alert("The generated response is: " + response);
+        // Code to simulate typing the response on the keyboard
+        // ...
+      }
     }
 
     document.addEventListener("contextmenu", function(event) {
@@ -46,6 +70,7 @@
   <div id="right-click-menu">
     <ul>
       <li><a href="#" onclick="openChatWindow()">Open Chat</a></li>
+      <li><a href="#" onclick="generateResponse()">Generate Response</a></li>
       <li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>
     </ul>
   </div>
@@ -56,6 +81,16 @@
     chatziBuddyImage.src = "https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png";
     chatziBuddyImage.alt = "Chatzi Buddy";
     document.body.appendChild(chatziBuddyImage);
+
+    // Function to make Chatzi Buddy say something
+    function saySomething() {
+      talk("Hello, I'm Chatzi Buddy! How can I assist you?");
+    }
+
+    // Call the saySomething function
+    saySomething();
   </script>
+
+  <textarea id="chatbox" rows="10" cols="50" readonly></textarea>
 </body>
 </html>
