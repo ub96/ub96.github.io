@@ -1,137 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Chatzi Buddy</title>
   <style>
-    /* CSS styles for the chat window */
-    .chat-window {
+    /* CSS styles for the right-click menu */
+    .menu {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 300px;
-      height: 400px;
-      background-color: #f8f8f8;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .chat-header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .chat-body {
-      padding: 10px;
-      height: 320px;
-      overflow-y: scroll;
-    }
-
-    .chat-input {
-      padding: 10px;
+      display: none;
       background-color: #fff;
-    }
-
-    .chat-input input[type="text"] {
-      width: 100%;
-      padding: 5px;
       border: 1px solid #ccc;
-      border-radius: 3px;
+      padding: 5px;
+      z-index: 9999;
+    }
+    .menu ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    .menu ul li {
+      margin-bottom: 5px;
+    }
+    .menu ul li a {
+      text-decoration: none;
+      color: #000;
+      display: block;
+      padding: 5px;
+    }
+    .menu ul li a:hover {
+      background-color: #f1f1f1;
     }
   </style>
-
   <script>
-    function openMenuWindow() {
-      var menuWindow = window.open('', 'Chatzi Buddy Menu', 'width=300,height=200');
-      menuWindow.document.write('<html><head><title>Chatzi Buddy Menu</title></head><body>');
-      menuWindow.document.write('<h1>Chatzi Buddy Menu</h1>');
-      menuWindow.document.write('<ul>');
-      menuWindow.document.write('<li><a href="#" onclick="openChatWindow()">Open Chat</a></li>');
-      menuWindow.document.write('<li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>');
-      menuWindow.document.write('</ul>');
-      menuWindow.document.write('</body></html>');
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+      // Code to execute after the HTML content has finished loading
 
-    function openChatWindow() {
-      var chatWindow = window.open('', 'Chatzi Buddy Chat', 'width=400,height=600');
-      chatWindow.document.write('<html><head><title>Chatzi Buddy Chat</title>');
-      chatWindow.document.write('<style>.chat-window { /* CSS styles for the chat window */ position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; overflow: hidden; } .chat-header { background-color: #333; color: #fff; padding: 10px; text-align: center; } .chat-body { padding: 10px; height: 320px; overflow-y: scroll; } .chat-input { padding: 10px; background-color: #fff; } .chat-input input[type="text"] { width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 3px; }</style>');
-      chatWindow.document.write('</head><body>');
-      chatWindow.document.write('<div class="chat-window">');
-      chatWindow.document.write('<div class="chat-header">');
-      chatWindow.document.write('<h2>Chatzi Buddy Chat GPT</h2>');
-      chatWindow.document.write('</div>');
-      chatWindow.document.write('<div class="chat-body" id="chat-body">');
-      chatWindow.document.write('<p>Welcome! How can I assist you?</p>');
-      chatWindow.document.write('</div>');
-      chatWindow.document.write('<div class="chat-input">');
-      chatWindow.document.write('<input type="text" id="user-input" placeholder="Type your message...">');
-      chatWindow.document.write('</div>');
-      chatWindow.document.write('<script>');
-      chatWindow.document.write('var userInput = chatWindow.document.getElementById("user-input");');
-      chatWindow.document.write('userInput.addEventListener("keydown", function(event) {');
-      chatWindow.document.write('if (event.key === "Enter") {');
-      chatWindow.document.write('event.preventDefault();');
-      chatWindow.document.write('sendMessage();');
-      chatWindow.document.write('}');
-      chatWindow.document.write('});');
-      chatWindow.document.write('function sendMessage() {');
-      chatWindow.document.write('var message = userInput.value;');
-      chatWindow.document.write('chatWindow.document.getElementById("chat-body").innerHTML += "<p><strong>You:</strong> " + message + "</p>";');
-      chatWindow.document.write('userInput.value = "";');
-      chatWindow.document.write('chatWindow.scrollTo(0, chatWindow.document.body.scrollHeight);');
-      chatWindow.document.write('fetchChatGptResponse(message);');
-      chatWindow.document.write('}');
-      chatWindow.document.write('function fetchChatGptResponse(message) {');
-      chatWindow.document.write('fetch("https://api.openai.com/v1/chat/completions", {');
-      chatWindow.document.write('method: "POST",');
-      chatWindow.document.write('headers: {');
-      chatWindow.document.write('"Content-Type": "application/json",');
-      chatWindow.document.write('"Authorization": "Bearer ' + atob("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsYkZKYVB5dDB5c0VOQ2E5amJOc0RRRkI=") + '"');
-      chatWindow.document.write('},');
-      chatWindow.document.write('body: JSON.stringify({');
-      chatWindow.document.write('"messages": [{');
-      chatWindow.document.write('"role": "system",');
-      chatWindow.document.write('"content": "You are Chatzi Buddy, your friendly AI assistant."');
-      chatWindow.document.write('}, {');
-      chatWindow.document.write('"role": "user",');
-      chatWindow.document.write('"content": message');
-      chatWindow.document.write('}],');
-      chatWindow.document.write('"max_tokens": 30');
-      chatWindow.document.write('})');
-      chatWindow.document.write('})');
-      chatWindow.document.write('.then(response => response.json())');
-      chatWindow.document.write('.then(data => {');
-      chatWindow.document.write('var response = data.choices[0].message.content;');
-      chatWindow.document.write('chatWindow.document.getElementById("chat-body").innerHTML += "<p><strong>Chatzi Buddy:</strong> " + response + "</p>";');
-      chatWindow.document.write('chatWindow.scrollTo(0, chatWindow.document.body.scrollHeight);');
-      chatWindow.document.write('});');
-      chatWindow.document.write('}');
-      chatWindow.document.write('</script>');
-      chatWindow.document.write('</div>');
-      chatWindow.document.write('</body></html>');
-    }
+      function openMenuWindow() {
+        var menuWindow = window.open("", "_blank", "width=300,height=400");
+        menuWindow.document.write('<!DOCTYPE html>');
+        menuWindow.document.write('<html>');
+        menuWindow.document.write('<head>');
+        menuWindow.document.write('<title>Chatzi Buddy Menu</title>');
+        menuWindow.document.write('<style>');
+        // CSS styles for the menu window
+        menuWindow.document.write('.menu-window {');
+        menuWindow.document.write('  font-family: Arial, sans-serif;');
+        menuWindow.document.write('  margin: 20px;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('.menu-window h1 {');
+        menuWindow.document.write('  font-size: 18px;');
+        menuWindow.document.write('  margin-bottom: 10px;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('.menu-window ul {');
+        menuWindow.document.write('  list-style-type: none;');
+        menuWindow.document.write('  margin: 0;');
+        menuWindow.document.write('  padding: 0;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('.menu-window ul li {');
+        menuWindow.document.write('  margin-bottom: 5px;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('.menu-window ul li a {');
+        menuWindow.document.write('  text-decoration: none;');
+        menuWindow.document.write('  color: #000;');
+        menuWindow.document.write('  display: block;');
+        menuWindow.document.write('  padding: 5px;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('.menu-window ul li a:hover {');
+        menuWindow.document.write('  background-color: #f1f1f1;');
+        menuWindow.document.write('}');
+        menuWindow.document.write('</style>');
+        menuWindow.document.write('</head>');
+        menuWindow.document.write('<body class="menu-window">');
+        menuWindow.document.write('<h1>Chatzi Buddy Menu</h1>');
+        menuWindow.document.write('<ul>');
+        menuWindow.document.write('<li><a href="#" onclick="openChatWindow()">Open Chat</a></li>');
+        menuWindow.document.write('<li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>');
+        menuWindow.document.write('</ul>');
+        menuWindow.document.write('<script>');
+        menuWindow.document.write('function openChatWindow() {');
+        menuWindow.document.write('  window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");');
+        menuWindow.document.write('}');
+        menuWindow.document.write('function closeChatziBuddy() {');
+        menuWindow.document.write('  window.close();');
+        menuWindow.document.write('}');
+        menuWindow.document.write('</script>');
+        menuWindow.document.write('</body>');
+        menuWindow.document.write('</html>');
+        menuWindow.document.close();
+      }
 
-    function closeChatziBuddy() {
-      if (confirm("Are you sure you want to close Chatzi Buddy?")) {
+      function openChatWindow() {
+        window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");
+      }
+
+      function closeChatziBuddy() {
         window.close();
       }
-    }
 
-    window.addEventListener('contextmenu', function (e) {
-      e.preventDefault();
-      var menu = document.getElementById('right-click-menu');
-      menu.style.left = e.clientX + 'px';
-      menu.style.top = e.clientY + 'px';
-      menu.classList.add('show');
-    });
+      // Add right-click event listener
+      document.addEventListener("contextmenu", function(event) {
+        event.preventDefault(); // Prevent the default right-click menu
+        var menu = document.getElementById("right-click-menu");
+        menu.style.left = event.clientX + "px";
+        menu.style.top = event.clientY + "px";
+        menu.style.display = "block";
+      });
 
-    window.addEventListener('click', function (e) {
-      var menu = document.getElementById('right-click-menu');
-      if (!menu.contains(e.target)) {
-        menu.classList.remove('show');
-      }
+      // Hide the menu when clicking outside of it
+      document.addEventListener("click", function(event) {
+        var menu = document.getElementById("right-click-menu");
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        }
+      });
     });
   </script>
 </head>
