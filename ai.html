@@ -26,7 +26,7 @@
     }
 
     function openChatWindow() {
-      var chatGPTWindow = window.open("https://ub96.github.io/ai.html", "_blank", "width=800,height=600");
+      var chatGPTWindow = window.open("https://ub96.github.io/gpt.html", "_blank", "width=800,height=600");
       chatGPTWindow.addEventListener("load", function() {
         // Pass the prompt text to the ChatGPT window
         var promptText = prompt("Enter the chat prompt");
@@ -80,15 +80,5 @@
   </script>
 
   <textarea id="chatbox" rows="10" cols="50" readonly></textarea>
-
-  <script>
-    // Function to handle messages received from the ChatGPT window
-    window.addEventListener("message", function(event) {
-      var chatbox = document.getElementById("chatbox");
-      var message = event.data;
-      chatbox.value += "ChatGPT: " + message + "\n";
-      chatbox.scrollTop = chatbox.scrollHeight;
-    });
-  </script>
 </body>
 </html>
