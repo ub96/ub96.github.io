@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChatGPT</title>
+  <style>
+    /* CSS styles for the ChatGPT window */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .chatbox {
+      width: 400px;
+      height: 300px;
+      margin-bottom: 20px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .user-input {
+      width: 100%;
+    }
+    .user-input button {
+      margin-top: 10px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@openai/chat-dvaas"></script>
+  <script>
+    // Function to handle messages received from the parent window
+    window.addEventListener("message", function(event) {
+      var promptText = event.data;
+      var chatContainer = document.getElementById("chat-container");
+      var chatbox = document.getElementById("chatbox");
+      var chatOption = "chatbox";
+
+      function addUserMessage(message) {
+        var userMessage = document.createElement("div");
+        userMessage.className = "user-message";
+        userMessage.textContent = "You: " + message;
+        chatbox.appendChild(userMessage);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
+
+      function addChatGPTMessage(message) {
+        var chatGPTMessage = document.createElement("div");
+        chatGPTMessage.className = "chatgpt-message";
+        chatGPTMessage.textContent = "ChatGPT: " + message;
+        chatbox.appendChild(chatGPTMessage);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
+
+      function sendMessage() {
+        var userInput = document.getElementById("user-input");
+        var message = userInput.value.trim();
+        if (message !== "") {
+          addUserMessage(message);
+          userInput.value = "";
+          chatDvaas.sendMessage(message).then(function(response) {
+            if (chatOption === "chatbox") {
+              addChatGPTMessage(response.message);
+            } else if (chatOption === "typing") {
+              typeOutResponse(response.message);
+            }
+          });
+        }
+      }
+
+      function typeOutResponse(message) {
+        var typingSpeed = 50; // Adjust typing speed (milliseconds per character)
+        var index = 0;
+
+        function typeCharacter() {
+          if (index < message.length) {
+            var character = message.charAt(index);
+            addChatGPTMessage(character);
+            index++;
+            setTimeout(typeCharacter, typingSpeed);
+          }
+        }
+
+        typeCharacter();
+      }
+
+      // Handle user input form submission
+      var userForm = document.getElementById("user-form");
+      userForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        sendMessage();
+      });
+
+      // Handle close button click
+      var closeButton = document.getElementById("close-button");
+      closeButton.addEventListener("click", function() {
+        window.close();
+      });
+
+      // Handle option selection
+      var optionSelect = document.getElementById("option-select");
+      optionSelect.addEventListener("change", function() {
+        chatOption = optionSelect.value;
+      });
+
+      // Show initial message
+      addChatGPTMessage("Hello, I'm ChatGPT! How can I assist you?");
+
+      // Initialize ChatDvaas client
+      var chatDvaas = new ChatDvaas({
+        apiKey: "YOUR_API_KEY"
+      });
+    });
+
+    // Notify the parent window that the ChatGPT window has loaded
+    window.opener.postMessage("ChatGPTWindowLoaded", "*");
+  </script>
+</head>
+<body>
+  <div class="chat-container">
+    <h1>ChatGPT</h1>
+    <div id="chatbox" class="chatbox"></div>
+    <form id="user-form">
+      <input type="text" id="user-input" class="user-input" placeholder="Type your message...">
+      <button type="submit">Send</button>
+    </form>
+    <label for="option-select">Response Display Option:</label>
+    <select id="option-select">
+      <option value="chatbox" selected>Chatbox</option>
+      <option value="typing">Typing</option>
+    </select>
+    <button id="close-button">Close</button>
+  </div>
+</body>
+</html>
