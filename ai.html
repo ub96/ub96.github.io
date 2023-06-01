@@ -44,10 +44,10 @@
         /* Additional CSS styles for Chatzi Buddy */
         .chatzi-image {
             position: absolute;
-            bottom: 20px;
+            top: 20px;
             right: 20px;
-            width: 150px;
-            height: 150px;
+            width: 100px;
+            height: 100px;
             background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
             background-size: cover;
             cursor: pointer;
@@ -64,11 +64,7 @@
             var decodedKey = atob(encryptedKey);
             
             // Replace this with your decryption logic
-  function decryptBase64(encodedText) {
-  var decodedText = atob(encodedText);
-  return decodedText;
-      
-  }
+            var decryptedKey = decodedKey; // Placeholder, replace with actual decryption
             
             return decryptedKey;
         }
@@ -84,7 +80,6 @@
         }
         
         function closeChatziBuddy() {
-            document.getElementById('menu-container').style.display = 'none';
             document.getElementById('chat-container').style.display = 'none';
         }
         
@@ -109,7 +104,7 @@
                 // Replace this with your logic
                 
                 // Decrypt the API key
-                var apiKey = decryptApiKey("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsaGtGSmFQeXQweXNFTkNhOWpiTmNETUxE");
+                var apiKey = decryptApiKey("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsaGtGSmFQeXQweXNFTk51eQ==");
                 
                 // Send user message and receive bot response
                 var botResponse = "This is a bot response.";
