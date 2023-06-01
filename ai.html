@@ -1,48 +1,378 @@
-function openMenuWindow() {
-  var menuWindow = window.open('', '_blank', 'width=300,height=200');
-  menuWindow.document.write(`
-    <html>
-    <head>
-      <title>Chatzi Buddy Menu</title>
-      <style>
-        /* CSS styles for the menu window */
-        /* Add your CSS styles here */
-        body {
-          padding: 20px;
-        }
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatzi Buddy</title>
+  <style>
+    /* CSS styles for the chat window */
+    /* Add your CSS styles here */
+    .chat-container {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 400px;
+      height: 500px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+    }
 
-        h2 {
-          margin-top: 0;
-        }
+    .chat-header {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
 
-        .menu-option button {
-          display: block;
-          width: 100%;
-          margin-bottom: 5px;
-        }
-      </style>
-    </head>
-    <body>
-      <h2>Menu</h2>
-      <div class="menu-option">
-        <button onclick="openChat()">Start Chat</button>
-      </div>
-      <div class="menu-option">
-        <button onclick="openChatGPT()">Chat GPT</button>
-      </div>
-      <div class="menu-option">
-        <button onclick="tellJoke()">Tell a Joke</button>
-      </div>
-      <div class="menu-option">
-        <button onclick="closeChatziBuddy()">Close Chatzi Buddy</button>
-      </div>
-    </body>
-    </html>
-  `);
-  menuWindow.document.close();
-}
+    .chat-header h2 {
+      margin: 0;
+    }
 
-document.addEventListener('contextmenu', function(event) {
-  event.preventDefault();
-  openMenuWindow();
-});
+    .chat-body {
+      height: 400px;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .chat-input {
+      padding: 10px;
+    }
+
+    .chat-input input[type="text"] {
+      width: 100%;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatzi-container">
+    <img id="chatzi-image" src="https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png" alt="Chatzi Buddy">
+  </div>
+
+  <script>
+    var menuWindow = null;
+
+    function openMenuWindow() {
+      if (menuWindow && !menuWindow.closed) {
+        menuWindow.focus();
+        return;
+      }
+
+      var chatziImage = document.getElementById('chatzi-image');
+      var imageWidth = chatziImage.offsetWidth;
+      var imageHeight = chatziImage.offsetHeight;
+
+      menuWindow = window.open('', '_blank', `width=${imageWidth},height=${imageHeight}`);
+      menuWindow.document.write(`
+        <html>
+        <head>
+          <title>Chatzi Buddy Menu</title>
+          <style>
+            /* CSS styles for the menu window */
+            /* Add your CSS styles here */
+            body {
+              padding: 20px;
+            }
+
+            h2 {
+              margin-top: 0;
+            }
+
+            .menu-option button {
+              display: block;
+              width: 100%;
+              margin-bottom: 5px;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>Menu</h2>
+          <div class="menu-option">
+            <button onclick="openChat()">Start Chat</button>
+          </div>
+          <div class="menu-option">
+            <button onclick="openChatGPT()">Chat GPT</button>
+          </div>
+          <div class="menu-option">
+            <button onclick="tellJoke()">Tell a Joke</button>
+          </div>
+          <div class="menu-option">
+            <button onclick="closeChatziBuddy()">Close Chatzi Buddy</button>
+          </div>
+        </body>
+        </html>
+      `);
+      menuWindow.document.close();
+    }
+
+    function openChat() {
+      var chatWindow = window.open('', '_blank', 'width=400,height=500');
+      chatWindow.document.write(`
+        <html>
+        <head>
+          <title>Chatzi Buddy Chat</title>
+          <style>
+            /* CSS styles for the chat window */
+            /* Add your CSS styles here */
+            .chat-container {
+              position: fixed;
+              bottom: 0;
+              right: 0;
+              width: 400px;
+              height: 500px;
+              background-color: white;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              overflow: hidden;
+            }
+
+            .chat-header {
+              background-color: #f0f0f0;
+              padding: 10px;
+              border-bottom: 1px solid #ccc;
+            }
+
+            .chat-header h2 {
+              margin: 0;
+            }
+
+            .chat-body {
+              height: 400px;
+              padding: 10px;
+              overflow-y: auto;
+            }
+
+            .chat-input {
+              padding: 10px;
+            }
+
+            .chat-input input[type="text"] {
+              width: 100%;
+              padding: 5px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="chat-container">
+            <div class="chat-header">
+              <h2>Chatzi Buddy</h2>
+            </div>
+            <div class="chat-body" id="chat-body">
+              <p>Welcome! How can I assist you?</p>
+            </div>
+            <div class="chat-input">
+              <input type="text" id="user-input" placeholder="Type your message...">
+            </div>
+          </div>
+
+          <script>
+            var chatBody = window.opener.document.getElementById('chat-body');
+            var userInput = window.opener.document.getElementById('user-input');
+            var apikey = window.opener.atob("c2stdFI0NERIS29MTUtKOHJaUGU3NjhxOTlWVElKeFVpTWY3dVZ0d05N");
+            var sessionId = '';
+
+            function sendMessage() {
+              var message = userInput.value.trim();
+              if (message !== '') {
+                displayMessage('User', message);
+                userInput.value = '';
+
+                fetch('https://api.symbl.ai/v1/process/text', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apikey
+                  },
+                  body: JSON.stringify({
+                    "messages": [{
+                      "payload": {
+                        "content": message
+                      }
+                    }]
+                  })
+                })
+                .then(response => response.json())
+                .then(data => {
+                  sessionId = data.conversationId;
+                  if (data.messages && data.messages.length > 0) {
+                    displayMessage('Chatzi Buddy', data.messages[0].payload.content);
+                  }
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+              }
+            }
+
+            function displayMessage(sender, message) {
+              var messageElement = document.createElement('p');
+              messageElement.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+              chatBody.appendChild(messageElement);
+              chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            userInput.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+                sendMessage();
+              }
+            });
+          </script>
+        </body>
+        </html>
+      `);
+      chatWindow.document.close();
+    }
+
+    function openChatGPT() {
+      var chatGPTWindow = window.open('', '_blank', 'width=400,height=500');
+      chatGPTWindow.document.write(`
+        <html>
+        <head>
+          <title>Chatzi Buddy Chat GPT</title>
+          <style>
+            /* CSS styles for the chat GPT window */
+            /* Add your CSS styles here */
+            .chat-container {
+              position: fixed;
+              bottom: 0;
+              right: 0;
+              width: 400px;
+              height: 500px;
+              background-color: white;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              overflow: hidden;
+            }
+
+            .chat-header {
+              background-color: #f0f0f0;
+              padding: 10px;
+              border-bottom: 1px solid #ccc;
+            }
+
+            .chat-header h2 {
+              margin: 0;
+            }
+
+            .chat-body {
+              height: 400px;
+              padding: 10px;
+              overflow-y: auto;
+            }
+
+            .chat-input {
+              padding: 10px;
+            }
+
+            .chat-input input[type="text"] {
+              width: 100%;
+              padding: 5px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="chat-container">
+            <div class="chat-header">
+              <h2>Chatzi Buddy Chat GPT</h2>
+            </div>
+            <div class="chat-body" id="chat-body">
+              <p>Welcome! How can I assist you?</p>
+            </div>
+            <div class="chat-input">
+              <input type="text" id="user-input" placeholder="Type your message...">
+            </div>
+          </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.28.0/dist/index.min.js"></script>
+          <script>
+            var chatBody = window.opener.document.getElementById('chat-body');
+            var userInput = window.opener.document.getElementById('user-input');
+            var apiKey = window.opener.atob("c2stdFI0NERIS29MTUtKOHJaUGU3NjhxOTlWVElKeFVpTWY3dVZ0d05N");
+            const openai = new OpenAI(apiKey);
+
+            function sendMessage() {
+              var message = userInput.value.trim();
+              if (message !== '') {
+                displayMessage('User', message);
+                userInput.value = '';
+
+                openai.complete({
+                  engine: 'davinci',
+                  prompt: 'Chatzi Buddy: ' + message + '\nUser:',
+                  maxTokens: 50,
+                  temperature: 0.6,
+                  topP: 1,
+                  presencePenalty: 0,
+                  frequencyPenalty: 0,
+                  bestOf: 1,
+                  n: 1,
+                  stop: ['\n']
+                })
+                .then(response => {
+                  const { choices } = response.data;
+                  const generatedMessage = choices[0].text.trim();
+                  displayMessage('Chatzi Buddy', generatedMessage);
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+              }
+            }
+
+            function displayMessage(sender, message) {
+              var messageElement = document.createElement('p');
+              messageElement.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+              chatBody.appendChild(messageElement);
+              chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            userInput.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+                sendMessage();
+              }
+            });
+          </script>
+        </body>
+        </html>
+      `);
+      chatGPTWindow.document.close();
+    }
+
+    function tellJoke() {
+      var jokes = [
+        "Why don't scientists trust atoms? Because they make up everything!",
+        "Did you hear about the mathematician who's afraid of negative numbers? He'll stop at nothing to avoid them!",
+        "Why did the scarecrow win an award? Because he was outstanding in his field!",
+        "What did one wall say to the other wall? I'll meet you at the corner!",
+        "How does a penguin build its house? Igloos it together!",
+        "Why don't skeletons fight each other? They don't have the guts!",
+        "What do you call a bear with no teeth? A gummy bear!",
+        "How do you organize a space party? You planet!",
+        "Why couldn't the bicycle stand up by itself? It was two-tired!",
+        "What do you call a fish wearing a crown? King Neptune!",
+      ];
+
+      var randomIndex = Math.floor(Math.random() * jokes.length);
+      var joke = jokes[randomIndex];
+
+      displayMessage('Chatzi Buddy', joke);
+    }
+
+    function closeChatziBuddy() {
+      if (menuWindow && !menuWindow.closed) {
+        menuWindow.close();
+      }
+
+      var chatWindow = window.open('', '_blank', 'width=400,height=500');
+      chatWindow.close();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var chatziContainer = document.getElementById('chatzi-container');
+      chatziContainer.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        openMenuWindow();
+      });
+    });
+  </script>
+</body>
+</html>
