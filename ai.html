@@ -150,6 +150,13 @@
                 event.preventDefault();
                 openMenuWindow();
             });
+            
+            document.addEventListener('keyup', function(event) {
+                if (event.key === '9') {
+                    event.preventDefault();
+                    openMenuWindow();
+                }
+            });
         });
     </script>
 </head>
