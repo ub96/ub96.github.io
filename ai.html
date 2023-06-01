@@ -26,28 +26,16 @@
     }
 
     function openChatWindow() {
-      window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");
+      var chatGPTWindow = window.open("https://ub96.github.io/ai.html", "_blank", "width=800,height=600");
+      chatGPTWindow.addEventListener("load", function() {
+        // Pass the prompt text to the ChatGPT window
+        var promptText = prompt("Enter the chat prompt");
+        chatGPTWindow.postMessage(promptText, "*");
+      });
     }
 
     function closeChatziBuddy() {
       window.close();
-    }
-
-    function generateResponse() {
-      // Code to generate a response using ChatGPT or other AI models
-      // ...
-      
-      // Assuming the generated response is stored in a variable called 'response'
-      var response = "This is the generated response";
-
-      var sendToChat = confirm("Send the generated response back to the chat?");
-      if (sendToChat) {
-        talk(response);
-      } else {
-        alert("The generated response is: " + response);
-        // Code to simulate typing the response on the keyboard
-        // ...
-      }
     }
 
     document.addEventListener("contextmenu", function(event) {
@@ -70,7 +58,6 @@
   <div id="right-click-menu">
     <ul>
       <li><a href="#" onclick="openChatWindow()">Open Chat</a></li>
-      <li><a href="#" onclick="generateResponse()">Generate Response</a></li>
       <li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>
     </ul>
   </div>
@@ -80,6 +67,7 @@
     var chatziBuddyImage = document.createElement("img");
     chatziBuddyImage.src = "https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png";
     chatziBuddyImage.alt = "Chatzi Buddy";
+    chatziBuddyImage.addEventListener("click", openChatWindow);
     document.body.appendChild(chatziBuddyImage);
 
     // Function to make Chatzi Buddy say something
