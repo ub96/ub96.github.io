@@ -41,7 +41,18 @@
             border-radius: 5px;
         }
         
-        /* Add your additional CSS styles for Chatzi Buddy here */
+        /* Additional CSS styles for Chatzi Buddy */
+        .chatzi-image {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
+            background-size: cover;
+            cursor: pointer;
+            z-index: 9999;
+        }
     </style>
     <script>
         // JavaScript code for Chatzi Buddy
@@ -102,6 +113,30 @@
             var chatContainer = document.getElementById('chat-container');
             chatContainer.appendChild(messageContainer);
         }
+        
+        function animateChatzi() {
+            // Add your animation logic for Chatzi Buddy here
+            // For example, you can make it shake, spin, or move around
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the menu initially
+            openMenu();
+            
+            // Add a click event listener to the Chatzi image
+            var chatziImage = document.getElementById('chatzi-image');
+            chatziImage.addEventListener('click', function() {
+                // Open the chat or perform any desired action
+                openChat();
+                animateChatzi();
+            });
+            
+            // Add a contextmenu event listener to the document
+            document.addEventListener('contextmenu', function(event) {
+                event.preventDefault();
+                openMenu();
+            });
+        });
     </script>
 </head>
 <body>
@@ -128,9 +163,6 @@
         </div>
     </div>
     
-    <script>
-        // Show the menu initially
-        openMenu();
-    </script>
+    <div class="chatzi-image" id="chatzi-image"></div>
 </body>
 </html>
