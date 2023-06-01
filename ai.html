@@ -1,127 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chatzi Buddy</title>
+  <title>Chatzi Buddy Menu</title>
   <style>
-    /* CSS styles for the right-click menu */
-    .menu {
-      position: fixed;
-      display: none;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 5px;
-      z-index: 9999;
+    /* CSS styles for the menu window */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
     }
-    .menu ul {
-      list-style-type: none;
-      margin: 0;
+    ul {
+      list-style: none;
       padding: 0;
     }
-    .menu ul li {
-      margin-bottom: 5px;
-    }
-    .menu ul li a {
-      text-decoration: none;
-      color: #000;
-      display: block;
-      padding: 5px;
-    }
-    .menu ul li a:hover {
-      background-color: #f1f1f1;
+    li {
+      margin-bottom: 10px;
     }
   </style>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Code to execute after the HTML content has finished loading
+    function openChatWindow() {
+      window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");
+    }
 
-      function openMenuWindow() {
-        var menuWindow = window.open("", "_blank", "width=300,height=400");
-        menuWindow.document.write('<!DOCTYPE html>');
-        menuWindow.document.write('<html>');
-        menuWindow.document.write('<head>');
-        menuWindow.document.write('<title>Chatzi Buddy Menu</title>');
-        menuWindow.document.write('<style>');
-        // CSS styles for the menu window
-        menuWindow.document.write('.menu-window {');
-        menuWindow.document.write('  font-family: Arial, sans-serif;');
-        menuWindow.document.write('  margin: 20px;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('.menu-window h1 {');
-        menuWindow.document.write('  font-size: 18px;');
-        menuWindow.document.write('  margin-bottom: 10px;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('.menu-window ul {');
-        menuWindow.document.write('  list-style-type: none;');
-        menuWindow.document.write('  margin: 0;');
-        menuWindow.document.write('  padding: 0;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('.menu-window ul li {');
-        menuWindow.document.write('  margin-bottom: 5px;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('.menu-window ul li a {');
-        menuWindow.document.write('  text-decoration: none;');
-        menuWindow.document.write('  color: #000;');
-        menuWindow.document.write('  display: block;');
-        menuWindow.document.write('  padding: 5px;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('.menu-window ul li a:hover {');
-        menuWindow.document.write('  background-color: #f1f1f1;');
-        menuWindow.document.write('}');
-        menuWindow.document.write('</style>');
-        menuWindow.document.write('</head>');
-        menuWindow.document.write('<body class="menu-window">');
-        menuWindow.document.write('<h1>Chatzi Buddy Menu</h1>');
-        menuWindow.document.write('<ul>');
-        menuWindow.document.write('<li><a href="#" onclick="openChatWindow()">Open Chat</a></li>');
-        menuWindow.document.write('<li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>');
-        menuWindow.document.write('</ul>');
-        menuWindow.document.write('<script>');
-        menuWindow.document.write('function openChatWindow() {');
-        menuWindow.document.write('  window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");');
-        menuWindow.document.write('}');
-        menuWindow.document.write('function closeChatziBuddy() {');
-        menuWindow.document.write('  window.close();');
-        menuWindow.document.write('}');
-        menuWindow.document.write('</script>');
-        menuWindow.document.write('</body>');
-        menuWindow.document.write('</html>');
-        menuWindow.document.close();
+    function closeChatziBuddy() {
+      window.close();
+    }
+
+    document.addEventListener("contextmenu", function(event) {
+      event.preventDefault(); // Prevent the default right-click menu
+      var menu = document.getElementById("right-click-menu");
+      menu.style.left = event.clientX + "px";
+      menu.style.top = event.clientY + "px";
+      menu.style.display = "block";
+    });
+
+    document.addEventListener("click", function(event) {
+      var menu = document.getElementById("right-click-menu");
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
       }
-
-      function openChatWindow() {
-        window.open("https://ub96.github.io/ai.html", "_blank", "width=400,height=600");
-      }
-
-      function closeChatziBuddy() {
-        window.close();
-      }
-
-      // Add right-click event listener
-      document.addEventListener("contextmenu", function(event) {
-        event.preventDefault(); // Prevent the default right-click menu
-        var menu = document.getElementById("right-click-menu");
-        menu.style.left = event.clientX + "px";
-        menu.style.top = event.clientY + "px";
-        menu.style.display = "block";
-      });
-
-      // Hide the menu when clicking outside of it
-      document.addEventListener("click", function(event) {
-        var menu = document.getElementById("right-click-menu");
-        if (menu.style.display === "block") {
-          menu.style.display = "none";
-        }
-      });
     });
   </script>
 </head>
 <body>
-  <div id="right-click-menu" class="menu">
+  <div id="right-click-menu">
     <ul>
       <li><a href="#" onclick="openChatWindow()">Open Chat</a></li>
       <li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>
     </ul>
   </div>
-  <img src="https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png" alt="Chatzi Buddy" onclick="openMenuWindow()">
+
+  <script>
+    // Code for displaying the Chatzi Buddy image when launched
+    var chatziBuddyImage = document.createElement("img");
+    chatziBuddyImage.src = "https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png";
+    chatziBuddyImage.alt = "Chatzi Buddy";
+    document.body.appendChild(chatziBuddyImage);
+  </script>
 </body>
 </html>
