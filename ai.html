@@ -64,7 +64,11 @@
             var decodedKey = atob(encryptedKey);
             
             // Replace this with your decryption logic
-            var decryptedKey = decodedKey; // Placeholder, replace with actual decryption
+  function decryptBase64(encodedText) {
+  var decodedText = atob(encodedText);
+  return decodedText;
+      
+  }
             
             return decryptedKey;
         }
@@ -79,6 +83,22 @@
             document.getElementById('chat-container').style.display = 'block';
         }
         
+        function closeChatziBuddy() {
+            document.getElementById('menu-container').style.display = 'none';
+            document.getElementById('chat-container').style.display = 'none';
+        }
+        
+        function openChatGPT() {
+            // Add your logic to open the Chat GPT chat box or perform any desired action
+            console.log('Open ChatGPT');
+        }
+        
+        function tellJoke() {
+            // Add your logic to tell a joke
+            var joke = "Why don't scientists trust atoms? Because they make up everything!";
+            displayMessage(joke, 'bot');
+        }
+        
         function sendMessage() {
             var messageInput = document.getElementById('message-input');
             var message = messageInput.value.trim();
@@ -89,10 +109,10 @@
                 // Replace this with your logic
                 
                 // Decrypt the API key
-                var apiKey = decryptApiKey("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsaGtGSmFQeXQweXNFTkNhOWpiTnN EUUZC");
+                var apiKey = decryptApiKey("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsaGtGSmFQeXQweXNFTkNhOWpiTmNETUxE");
                 
-                // Use the decrypted API key for the ChatGPT API request
-                var botResponse = "Bot response goes here";
+                // Send user message and receive bot response
+                var botResponse = "This is a bot response.";
                 displayMessage(botResponse, 'bot');
             }
         }
@@ -100,9 +120,7 @@
         function displayMessage(message, type) {
             var messageContainer = document.createElement('div');
             messageContainer.classList.add('message');
-        
-            var messageContent = document.createTextNode(message);
-            messageContainer.appendChild(messageContent);
+            messageContainer.textContent = message;
         
             if (type === 'user') {
                 messageContainer.classList.add('user-message');
@@ -136,6 +154,31 @@
                 event.preventDefault();
                 openMenu();
             });
+            
+            // Add a click event listener to the Chat GPT menu option
+            var chatGptOption = document.getElementById('chat-gpt-option');
+            chatGptOption.addEventListener('click', function(event) {
+                event.preventDefault();
+                openChatGPT();
+                animateChatzi();
+                document.getElementById('menu-container').style.display = 'none';
+            });
+            
+            // Add a click event listener to the Tell a Joke menu option
+            var tellJokeOption = document.getElementById('tell-joke-option');
+            tellJokeOption.addEventListener('click', function(event) {
+                event.preventDefault();
+                tellJoke();
+                animateChatzi();
+                document.getElementById('menu-container').style.display = 'none';
+            });
+            
+            // Add a click event listener to the Close Chatzi Buddy menu option
+            var closeChatziOption = document.getElementById('close-chatzi-option');
+            closeChatziOption.addEventListener('click', function(event) {
+                event.preventDefault();
+                closeChatziBuddy();
+            });
         });
     </script>
 </head>
@@ -146,10 +189,13 @@
             <button onclick="openChat()">Start Chat</button>
         </div>
         <div class="menu-option">
-            <button>Option 2</button>
+            <button id="chat-gpt-option">Chat GPT</button>
         </div>
         <div class="menu-option">
-            <button>Option 3</button>
+            <button id="tell-joke-option">Tell a Joke</button>
+        </div>
+        <div class="menu-option">
+            <button id="close-chatzi-option">Close Chatzi Buddy</button>
         </div>
     </div>
     
