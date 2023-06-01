@@ -4,206 +4,174 @@
     <title>Chatzi Buddy</title>
     <style>
         /* CSS styles for Chatzi Buddy */
-        body {
-            font-family: Arial, sans-serif;
-        }
-        
-        .menu-container {
-            background-color: #f2f2f2;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .menu-option {
-            margin-bottom: 10px;
+        .chatzi-image {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: pointer;
         }
         
         .chat-container {
-            background-color: #f2f2f2;
-            padding: 20px;
-            border-radius: 8px;
+            width: 400px;
+            height: 300px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
         }
         
         .message {
             margin-bottom: 10px;
         }
         
-        .user-message {
-            background-color: #d2d2d2;
-            padding: 10px;
-            border-radius: 5px;
+        .message .user-message {
+            font-weight: bold;
         }
         
-        .bot-message {
-            background-color: #c2d6d6;
-            padding: 10px;
-            border-radius: 5px;
+        .message input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            margin-right: 10px;
         }
         
-        /* Additional CSS styles for Chatzi Buddy */
-        .chatzi-image {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            background-image: url('https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png');
-            background-size: cover;
-            cursor: pointer;
-            z-index: 9999;
+        .message button {
+            padding: 5px 10px;
         }
     </style>
     <script>
         // JavaScript code for Chatzi Buddy
         // Add your JavaScript code here
         
-        // Function to decrypt the encrypted API key
-        function decryptApiKey(encryptedKey) {
-            // Decode the Base64 encoded key
-            var decodedKey = atob(encryptedKey);
-            
-            // Replace this with your decryption logic
-            var decryptedKey = decodedKey; // Placeholder, replace with actual decryption
-            
-            return decryptedKey;
-        }
-        
-        function openMenu() {
-            document.getElementById('menu-container').style.display = 'block';
-            document.getElementById('chat-container').style.display = 'none';
+        function openMenuWindow() {
+            var menuWindow = window.open('', '_blank', 'width=300,height=200');
+            menuWindow.document.write(`
+                <html>
+                <head>
+                    <title>Chatzi Buddy Menu</title>
+                    <style>
+                        /* CSS styles for the menu window */
+                        /* Add your CSS styles here */
+                        body {
+                            padding: 20px;
+                        }
+                        
+                        h2 {
+                            margin-top: 0;
+                        }
+                        
+                        .menu-option button {
+                            display: block;
+                            width: 100%;
+                            margin-bottom: 5px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h2>Menu</h2>
+                    <div class="menu-option">
+                        <button onclick="openChat()">Start Chat</button>
+                    </div>
+                    <div class="menu-option">
+                        <button onclick="openChatGPT()">Chat GPT</button>
+                    </div>
+                    <div class="menu-option">
+                        <button onclick="tellJoke()">Tell a Joke</button>
+                    </div>
+                    <div class="menu-option">
+                        <button onclick="closeChatziBuddy()">Close Chatzi Buddy</button>
+                    </div>
+                </body>
+                </html>
+            `);
+            menuWindow.document.close();
         }
         
         function openChat() {
-            document.getElementById('menu-container').style.display = 'none';
-            document.getElementById('chat-container').style.display = 'block';
-        }
-        
-        function closeChatziBuddy() {
-            document.getElementById('chat-container').style.display = 'none';
+            var chatContainer = document.getElementById('chat-container');
+            var chatziContainer = document.getElementById('chatzi-container');
+            
+            chatContainer.style.display = 'block';
+            chatziContainer.style.display = 'none';
         }
         
         function openChatGPT() {
-            // Add your logic to open the Chat GPT chat box or perform any desired action
-            console.log('Open ChatGPT');
+            var chatGptContainer = document.getElementById('chat-gpt-container');
+            var chatziContainer = document.getElementById('chatzi-container');
+            
+            chatGptContainer.style.display = 'block';
+            chatziContainer.style.display = 'none';
         }
         
-        function tellJoke() {
-            // Add your logic to tell a joke
-            var joke = "Why don't scientists trust atoms? Because they make up everything!";
-            displayMessage(joke, 'bot');
+        function closeChatziBuddy() {
+            var chatContainer = document.getElementById('chat-container');
+            var chatGptContainer = document.getElementById('chat-gpt-container');
+            var chatziContainer = document.getElementById('chatzi-container');
+            
+            chatContainer.style.display = 'none';
+            chatGptContainer.style.display = 'none';
+            chatziContainer.style.display = 'block';
         }
         
         function sendMessage() {
-            var messageInput = document.getElementById('message-input');
-            var message = messageInput.value.trim();
-            if (message !== '') {
-                displayMessage(message, 'user');
-                messageInput.value = '';
-                // Code to send user message and receive bot response
-                // Replace this with your logic
-                
-                // Decrypt the API key
-                var apiKey = decryptApiKey("c2stdFI0NERCSEdvMTU3dTdQOXFDOERUM0JsaGtGSmFQeXQweXNFTk51eQ==");
-                
-                // Send user message and receive bot response
-                var botResponse = "This is a bot response.";
-                displayMessage(botResponse, 'bot');
-            }
+            var userInput = document.getElementById('user-input');
+            var chatHistory = document.getElementById('chat-history');
+            
+            var userMessage = userInput.value;
+            var message = document.createElement('div');
+            message.classList.add('message');
+            message.innerHTML = '<span class="user-message">You: </span>' + userMessage;
+            
+            chatHistory.appendChild(message);
+            userInput.value = '';
         }
         
-        function displayMessage(message, type) {
-            var messageContainer = document.createElement('div');
-            messageContainer.classList.add('message');
-            messageContainer.textContent = message;
-        
-            if (type === 'user') {
-                messageContainer.classList.add('user-message');
-            } else if (type === 'bot') {
-                messageContainer.classList.add('bot-message');
-            }
-        
-            var chatContainer = document.getElementById('chat-container');
-            chatContainer.appendChild(messageContainer);
-        }
-        
-        function animateChatzi() {
-            // Add your animation logic for Chatzi Buddy here
-            // For example, you can make it shake, spin, or move around
+        function tellJoke() {
+            var chatHistory = document.getElementById('chat-history');
+            
+            var joke = "Why don't scientists trust atoms? Because they make up everything!";
+            var message = document.createElement('div');
+            message.classList.add('message');
+            message.innerHTML = '<span class="user-message">Chatzi Buddy: </span>' + joke;
+            
+            chatHistory.appendChild(message);
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Show the menu initially
-            openMenu();
-            
-            // Add a click event listener to the Chatzi image
+            var chatziContainer = document.getElementById('chatzi-container');
             var chatziImage = document.getElementById('chatzi-image');
+            
             chatziImage.addEventListener('click', function() {
-                // Open the chat or perform any desired action
-                openChat();
-                animateChatzi();
+                openMenuWindow();
             });
             
-            // Add a contextmenu event listener to the document
             document.addEventListener('contextmenu', function(event) {
                 event.preventDefault();
-                openMenu();
-            });
-            
-            // Add a click event listener to the Chat GPT menu option
-            var chatGptOption = document.getElementById('chat-gpt-option');
-            chatGptOption.addEventListener('click', function(event) {
-                event.preventDefault();
-                openChatGPT();
-                animateChatzi();
-                document.getElementById('menu-container').style.display = 'none';
-            });
-            
-            // Add a click event listener to the Tell a Joke menu option
-            var tellJokeOption = document.getElementById('tell-joke-option');
-            tellJokeOption.addEventListener('click', function(event) {
-                event.preventDefault();
-                tellJoke();
-                animateChatzi();
-                document.getElementById('menu-container').style.display = 'none';
-            });
-            
-            // Add a click event listener to the Close Chatzi Buddy menu option
-            var closeChatziOption = document.getElementById('close-chatzi-option');
-            closeChatziOption.addEventListener('click', function(event) {
-                event.preventDefault();
-                closeChatziBuddy();
+                openMenuWindow();
             });
         });
     </script>
 </head>
 <body>
-    <div class="menu-container" id="menu-container">
-        <h2>Menu</h2>
-        <div class="menu-option">
-            <button onclick="openChat()">Start Chat</button>
-        </div>
-        <div class="menu-option">
-            <button id="chat-gpt-option">Chat GPT</button>
-        </div>
-        <div class="menu-option">
-            <button id="tell-joke-option">Tell a Joke</button>
-        </div>
-        <div class="menu-option">
-            <button id="close-chatzi-option">Close Chatzi Buddy</button>
-        </div>
+    <div id="chatzi-container">
+        <div id="chatzi-image" class="chatzi-image"></div>
     </div>
     
-    <div class="chat-container" id="chat-container" style="display: none;">
-        <div id="chat-container" class="chat-container">
-            <!-- Chat messages will be dynamically added here -->
-        </div>
-        <div>
-            <input id="message-input" type="text" placeholder="Type your message">
+    <div id="chat-container" class="chat-container" style="display: none;">
+        <div id="chat-history"></div>
+        <div class="message">
+            <input type="text" id="user-input" placeholder="Enter your message...">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
     
-    <div class="chatzi-image" id="chatzi-image"></div>
+    <div id="chat-gpt-container" class="chat-container" style="display: none;">
+        <div id="chat-history"></div>
+        <div class="message">
+            <input type="text" id="user-input" placeholder="Enter your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
 </body>
 </html>
