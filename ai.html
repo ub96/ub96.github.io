@@ -80,5 +80,15 @@
   </script>
 
   <textarea id="chatbox" rows="10" cols="50" readonly></textarea>
+
+  <script>
+    // Function to handle messages received from the ChatGPT window
+    window.addEventListener("message", function(event) {
+      var chatbox = document.getElementById("chatbox");
+      var message = event.data;
+      chatbox.value += "ChatGPT: " + message + "\n";
+      chatbox.scrollTop = chatbox.scrollHeight;
+    });
+  </script>
 </body>
 </html>
