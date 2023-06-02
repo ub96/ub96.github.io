@@ -1,40 +1,124 @@
-// Function to send user message and receive response
-async function sendMessage() {
-  const inputField = document.getElementById('message-input');
-  const message = inputField.value;
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ChatGPT Demo</title>
+  <style>
+    .chat-container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+    .chat-container p {
+      margin: 10px 0;
+    }
+    .user-message {
+      color: blue;
+    }
+    .assistant-message {
+      color: green;
+    }
+  </style>
+  <script>
+    // API key variable
+    let apiKey = '';
 
-  if (message.trim() === '') {
-    return;
-  }
+    // Function to send user message and receive response
+    async function sendMessage() {
+      const inputField = document.getElementById('message-input');
+      const message = inputField.value;
 
-  inputField.value = '';
-  appendMessage('user', message);
+      if (message.trim() === '') {
+        return;
+      }
 
-  try {
-    const response = await fetch('/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}` // Pass the API key in the Authorization header
-      },
-      body: JSON.stringify({ message: message })
-    });
+      inputField.value = '';
+      appendMessage('user', message);
 
-    if (!response.ok) {
-      throw new Error('Request failed');
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}` // Pass the API key in the Authorization header
+          },
+          body: JSON.stringify({ message: message })
+        });
+
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+
+        const data = await response.json();
+        const reply = data.reply;
+
+        const displayOption = document.querySelector('input[name="display-option"]:checked').value;
+        if (displayOption === 'keyboard') {
+          simulateTyping(reply);
+        } else {
+          appendMessage('assistant', reply);
+        }
+      } catch (error) {
+        console.error(error);
+        appendMessage('assistant', 'Oops! Something went wrong.');
+      }
     }
 
-    const data = await response.json();
-    const reply = data.reply;
+    // Function to simulate typing the response on the keyboard
+    function simulateTyping(response) {
+      const inputField = document.getElementById('message-input');
+      const typingSpeed = 50; // Adjust typing speed as desired (in milliseconds)
+      let charIndex = 0;
 
-    const displayOption = document.querySelector('input[name="display-option"]:checked').value;
-    if (displayOption === 'keyboard') {
-      simulateTyping(reply);
-    } else {
-      appendMessage('assistant', reply);
+      const typeChar = () => {
+        if (charIndex < response.length) {
+          inputField.value += response.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeChar, typingSpeed);
+        }
+      };
+
+      typeChar();
     }
-  } catch (error) {
-    console.error(error);
-    appendMessage('assistant', 'Oops! Something went wrong.');
-  }
-}
+
+    // Function to append a message to the chat container
+    function appendMessage(sender, message) {
+      const chatContainer = document.getElementById('chat-container');
+      const newMessage = document.createElement('p');
+
+      newMessage.className = sender === 'user' ? 'user-message' : 'assistant-message';
+      newMessage.textContent = message;
+
+      chatContainer.appendChild(newMessage);
+    }
+
+    // Function to handle API key input
+    function setApiKey() {
+      apiKey = document.getElementById('api-key-input').value;
+      document.getElementById('api-key-form').style.display = 'none';
+    }
+  </script>
+</head>
+<body>
+  <div class="chat-container" id="chat-container">
+    <h1>ChatGPT Demo</h1>
+  </div>
+  <div class="chat-container" id="api-key-form">
+    <p>Please enter your API key:</p>
+    <input type="text" id="api-key-input" placeholder="API key" />
+    <button onclick="setApiKey()">Submit</button>
+  </div>
+  <div class="chat-container">
+    <input type="text" id="message-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+    <br>
+    <input type="radio" id="display-keyboard" name="display-option" value="keyboard" checked>
+    <label for="display-keyboard">Display as typing</label>
+    <input type="radio" id="display-chatbox" name="display-option" value="chatbox">
+    <label for="display-chatbox">Display in chatbox</label>
+  </div>
+</body>
+</html>
