@@ -1,84 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Chatzi Buddy Menu</title>
-  <style>
-    /* CSS styles for the menu window */
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 10px;
-    }
-  </style>
-  <script>
-    // Function to make Chatzi Buddy talk
-    function talk(message) {
-      var chatbox = document.getElementById("chatbox");
-      chatbox.value += "Chatzi Buddy: " + message + "\n";
-      chatbox.scrollTop = chatbox.scrollHeight;
-    }
-
-    function openChatWindow() {
-      var chatGPTWindow = window.open("https://ub96.github.io/gpt.html", "_blank", "width=800,height=600");
-      chatGPTWindow.addEventListener("load", function() {
-        // Pass the prompt text to the ChatGPT window
-        var promptText = prompt("Enter the chat prompt");
-        chatGPTWindow.postMessage(promptText, "*");
-      });
-    }
-
-    function closeChatziBuddy() {
-      window.close();
-    }
-
-    document.addEventListener("contextmenu", function(event) {
-      event.preventDefault(); // Prevent the default right-click menu
-      var menu = document.getElementById("right-click-menu");
-      menu.style.left = event.clientX + "px";
-      menu.style.top = event.clientY + "px";
-      menu.style.display = "block";
-    });
-
-    document.addEventListener("click", function(event) {
-      var menu = document.getElementById("right-click-menu");
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-      }
-    });
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Assistant</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Add your custom CSS file here -->
 </head>
 <body>
-  <div id="right-click-menu">
-    <ul>
-      <li><a href="#" onclick="openChatWindow()">Open Chat</a></li>
-      <li><a href="#" onclick="closeChatziBuddy()">Close Chatzi Buddy</a></li>
-    </ul>
-  </div>
+  <main>
+    <img src="virtual_assistant_picture.jpg" alt="Virtual Assistant Picture">
+  </main>
 
-  <script>
-    // Code for displaying the Chatzi Buddy image when launched
-    var chatziBuddyImage = document.createElement("img");
-    chatziBuddyImage.src = "https://raw.githubusercontent.com/ub96/ub96.github.io/main/bonzi.png";
-    chatziBuddyImage.alt = "Chatzi Buddy";
-    chatziBuddyImage.addEventListener("click", openChatWindow);
-    document.body.appendChild(chatziBuddyImage);
-
-    // Function to make Chatzi Buddy say something
-    function saySomething() {
-      talk("Hello, I'm Chatzi Buddy! How can I assist you?");
-    }
-
-    // Call the saySomething function
-    saySomething();
-  </script>
-
-  <textarea id="chatbox" rows="10" cols="50" readonly></textarea>
+  <script src="script.js"></script> <!-- Add your custom JavaScript file here -->
 </body>
 </html>
