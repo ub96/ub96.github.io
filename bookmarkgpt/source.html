@@ -51,7 +51,8 @@
         if (response.status === 401) {
           throw new Error('Invalid API key');
         } else if (!response.ok) {
-          throw new Error('Request failed');
+          const errorData = await response.json();
+          throw new Error(errorData.error);
         }
 
         const data = await response.json();
@@ -65,11 +66,7 @@
         }
       } catch (error) {
         console.error(error);
-        if (error.message === 'Invalid API key') {
-          appendMessage('assistant', 'Invalid API key. Please enter a valid key.');
-        } else {
-          appendMessage('assistant', 'Oops! Something went wrong.');
-        }
+        appendMessage('assistant', `Error: ${error.message}`);
       }
     }
 
@@ -118,7 +115,7 @@
           }
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
           document.getElementById('api-key-form').style.display = 'none';
         } else {
           throw new Error('Invalid API key');
