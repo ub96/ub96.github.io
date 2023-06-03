@@ -1,60 +1,27 @@
-document.addEventListener("DOMContentLoaded", function() {
-    var chatziBuddyIcon = document.getElementById("chatzi-buddy-icon");
-    var menu = document.querySelector(".menu");
-    var menuChatGptOption = document.getElementById("menu-chatgpt");
-    var menuOpenChatOption = document.getElementById("menu-open-chat");
-    var chatziBuddy = document.getElementById("chatzi-buddy");
-    var chatWindow = document.getElementById("chat-window");
-    var messageBox = document.getElementById("message-box");
+// Add an event listener to the contextmenu event on the document
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // Prevent the default context menu from appearing
 
-    chatziBuddyIcon.addEventListener("click", function() {
-        menu.style.display = "block";
-    });
+  // Create a new context menu
+  var contextMenu = document.createElement('div');
+  contextMenu.id = 'context-menu';
+  contextMenu.innerHTML = '<ul><li id="open-chat">Open Chat</li></ul>';
 
-    menuChatGptOption.addEventListener("click", function() {
-        menu.style.display = "none";
-        chatziBuddy.style.display = "block";
-    });
+  // Position the context menu where the right-click event occurred
+  contextMenu.style.top = event.clientY + 'px';
+  contextMenu.style.left = event.clientX + 'px';
 
-    menuOpenChatOption.addEventListener("click", function() {
-        menu.style.display = "none";
-        chatziBuddy.style.display = "none";
-    });
+  // Add the context menu to the document body
+  document.body.appendChild(contextMenu);
 
-    messageBox.addEventListener("keydown", function(event) {
-        if (event.key === "Enter" && messageBox.value.trim() !== "") {
-            var message = messageBox.value.trim();
+  // Add a click event listener to the 'Open Chat' option
+  var openChatOption = document.getElementById('open-chat');
+  openChatOption.addEventListener('click', function() {
+    window.location.href = 'chat.html'; // Redirect to chat.html
+  });
 
-            createChatBubble("user", message);
-
-            var response = generateResponse(message);
-
-            createChatBubble("chatzi", response);
-
-            speak(response); // Speak the response
-
-            messageBox.value = "";
-        }
-    });
-
-    function createChatBubble(sender, message) {
-        var bubble = document.createElement("div");
-        bubble.classList.add("chat-bubble");
-        bubble.classList.add(sender === "user" ? "user" : "chatzi");
-        bubble.textContent = message;
-
-        chatWindow.appendChild(bubble);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-
-    function speak(text) {
-        var utterance = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(utterance);
-    }
-
-    function generateResponse(message) {
-        // Replace this with your own logic to generate responses
-        var response = "I'm Chatzi Buddy! How can I assist you today?";
-        return response;
-    }
+  // Remove the context menu when clicking outside of it
+  document.addEventListener('click', function() {
+    document.body.removeChild(contextMenu);
+  });
 });
