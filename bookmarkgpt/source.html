@@ -48,7 +48,9 @@
           body: JSON.stringify({ message: message })
         });
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Invalid API key');
+        } else if (!response.ok) {
           throw new Error('Request failed');
         }
 
@@ -63,7 +65,11 @@
         }
       } catch (error) {
         console.error(error);
-        appendMessage('assistant', 'Oops! Something went wrong.');
+        if (error.message === 'Invalid API key') {
+          appendMessage('assistant', 'Invalid API key. Please enter a valid key.');
+        } else {
+          appendMessage('assistant', 'Oops! Something went wrong.');
+        }
       }
     }
 
@@ -98,7 +104,29 @@
     // Function to handle API key input
     function setApiKey() {
       apiKey = document.getElementById('api-key-input').value;
-      document.getElementById('api-key-form').style.display = 'none';
+      validateApiKey(apiKey);
+    }
+
+    // Function to validate the API key
+    async function validateApiKey(apiKey) {
+      try {
+        const response = await fetch('/validate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}` // Pass the API key in the Authorization header
+          }
+        });
+
+        if (response.ok) {
+          document.getElementById('api-key-form').style.display = 'none';
+        } else {
+          throw new Error('Invalid API key');
+        }
+      } catch (error) {
+        console.error(error);
+        appendMessage('assistant', 'Invalid API key. Please enter a valid key.');
+      }
     }
   </script>
 </head>
