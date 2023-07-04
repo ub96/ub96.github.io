@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fake Jailbreaking App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .code {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .toggle-label span {
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        // Simulate the verbose code running
+        function runVerboseCode() {
+            var codeElement = document.getElementById("code");
+            codeElement.innerHTML = "Running verbose code...\n";
+            setTimeout(function () {
+                codeElement.innerHTML += "Bootstrapping Kernel\n";
+            }, 1000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Adding Rootless Bootstrap files\n";
+            }, 2000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Blocking software updates\n";
+            }, 3000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Preparing Sileo Nightly\n";
+            }, 4000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Installing Trollstore Helper\n";
+            }, 5000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Obtaining SSH Access\n";
+            }, 6000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Preparing exploit chain to enhance experience\n";
+            }, 7000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Installing Bolt in TrollStore\n";
+            }, 8000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Using CVE-2023 Exploit to obtain more access to the filesystem\n";
+            }, 9000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Installing Sileo\n";
+            }, 10000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Finishing Up\n";
+            }, 11000);
+            setTimeout(function () {
+                codeElement.innerHTML += "Your jailbreak has finished!\n";
+                // Play video file
+                var videoElement = document.createElement("video");
+                videoElement.width = "560";
+                videoElement.height = "315";
+                videoElement.controls = true;
+                var sourceElement = document.createElement("source");
+                sourceElement.src = "path/to/your/video/file.mp4";
+                sourceElement.type = "video/mp4";
+                videoElement.appendChild(sourceElement);
+                codeElement.appendChild(videoElement);
+            }, 11000);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bolt Jailbreak</h1>
+        <p>Jailbreak for iOS 12.0 up to ios 17 beta!</p>
+        <button class="button" onclick="runVerboseCode()">Lightning Now</button>
+        <div id="code" class="code"></div>
+        <div class="toggle-label">
+            <input type="checkbox" id="restoreToggle" />
+            <span>Restore Root FS</span>
+        </div>
+    </div>
+</body>
+
+</html>
