@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Fake Jailbreaking App</title>
+    <title>Jailbreaking App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,10 +53,6 @@
             margin-top: 10px;
         }
 
-        .toggle-label span {
-            margin-left: 10px;
-        }
-
         .warning {
             margin-top: 20px;
             padding: 10px;
@@ -65,70 +61,93 @@
             font-size: 14px;
             font-weight: bold;
         }
+
+        .hide {
+            display: none;
+        }
     </style>
     <script>
+        var rickrollTriggered = false;
+
         // Simulate the verbose code running
         function runVerboseCode() {
-            var codeElement = document.getElementById("code");
-            codeElement.innerHTML = "Running verbose code...\n";
-            setTimeout(function () {
-                codeElement.innerHTML += "Bootstrapping Kernel\n";
-            }, 1000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Adding Rootless Bootstrap files\n";
-            }, 2000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Blocking software updates\n";
-            }, 3000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Preparing Sileo Nightly\n";
-            }, 4000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Installing Trollstore Helper\n";
-            }, 5000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Obtaining SSH Access\n";
-            }, 6000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Preparing exploit chain to enhance experience\n";
-            }, 7000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Installing Bolt in TrollStore\n";
-            }, 8000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Using CVE-2023 Exploit to obtain more access to the filesystem\n";
-            }, 9000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Installing Sileo\n";
-            }, 10000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Finishing Up\n";
-            }, 11000);
-            setTimeout(function () {
-                codeElement.innerHTML += "Your jailbreak has finished!\n";
-                // Embed the link
-                var iframeElement = document.createElement("iframe");
-                iframeElement.src = "https://ub96.github.io/fakeJB/rick.mp4";
-                iframeElement.width = "560";
-                iframeElement.height = "315";
-                codeElement.appendChild(iframeElement);
-            }, 11000);
+            if (!rickrollTriggered) {
+                var codeElement = document.getElementById("code");
+                codeElement.innerHTML = "Running verbose code...\n";
+                setTimeout(function () {
+                    codeElement.innerHTML += "Bootstrapping Kernel\n";
+                }, 1000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Adding Rootless Bootstrap files\n";
+                }, 2000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Blocking software updates\n";
+                }, 3000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Preparing Sileo Nightly\n";
+                }, 4000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Installing Trollstore Helper\n";
+                }, 5000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Obtaining SSH Access\n";
+                }, 6000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Preparing exploit chain to enhance experience\n";
+                }, 7000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Installing Bolt in TrollStore\n";
+                }, 8000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Using CVE-2023 Exploit to obtain more access to the filesystem\n";
+                }, 9000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Installing Sileo\n";
+                }, 10000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Finishing Up\n";
+                }, 11000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Your jailbreak has finished!\n";
+                    triggerRickroll();
+                }, 11000);
+            }
         }
 
-        window.onload = function () {
-            var warningElement = document.createElement("div");
-            warningElement.className = "PLEASE READ";
-            warningElement.innerText = "This fake jailbreak will rickroll you, US CREATORS ARE NOT RESPONSIBLE FOR ANYTHING THAT HAPPENS WITH THE USE OF THIS PRANK WEBSITE! (like that should happen) Please prank at your own risk!";
-            var containerElement = document.querySelector(".container");
-            containerElement.insertBefore(warningElement, containerElement.firstChild);
+        // Trigger the Rickroll
+        function triggerRickroll() {
+            rickrollTriggered = true;
+            var codeElement = document.getElementById("code");
+            codeElement.innerHTML = "";
+
+            // Embed the Rickroll video
+            var iframeElement = document.createElement("iframe");
+            iframeElement.src = "https://ub96.github.io/fakeJB/rick.html";
+            iframeElement.width = "560";
+            iframeElement.height = "315";
+            codeElement.appendChild(iframeElement);
         }
+
+        function agreeToWarning() {
+            var warningElement = document.querySelector(".warning");
+            warningElement.classList.add("hide");
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            var warningElement = document.querySelector(".warning");
+            warningElement.classList.remove("hide");
+        });
     </script>
 </head>
 
 <body>
     <div class="container">
         <h1>Bolt Jailbreak</h1>
-        <p>Jailbreak for iOS 12.0 up to ios 17 beta!</p>
+        <p>Jailbreak for iOS 12.0 up to iOS 17 beta!</p>
+        <div class="warning hide">
+            <p>This jailbreak is a rickroll and not an actual jailbreaking tool!</p>
+        </div>
+        <button class="agree-button" onclick="agreeToWarning()">I Agree</button>
         <button class="button" onclick="runVerboseCode()">Lightning Now</button>
         <div id="code" class="code"></div>
         <div class="toggle-label">
