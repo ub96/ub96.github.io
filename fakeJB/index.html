@@ -56,6 +56,15 @@
         .toggle-label span {
             margin-left: 10px;
         }
+
+        .warning {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffe5e5;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
     <script>
         // Simulate the verbose code running
@@ -97,17 +106,21 @@
             }, 11000);
             setTimeout(function () {
                 codeElement.innerHTML += "Your jailbreak has finished!\n";
-                // Play video file
-                var videoElement = document.createElement("video");
-                videoElement.width = "560";
-                videoElement.height = "315";
-                videoElement.controls = true;
-                var sourceElement = document.createElement("source");
-                sourceElement.src = "path/to/your/video/file.mp4";
-                sourceElement.type = "video/mp4";
-                videoElement.appendChild(sourceElement);
-                codeElement.appendChild(videoElement);
+                // Embed the link
+                var iframeElement = document.createElement("iframe");
+                iframeElement.src = "https://www.youtube.com/embed/watch?v=m4QO5jyEw2E&t=20s";
+                iframeElement.width = "560";
+                iframeElement.height = "315";
+                codeElement.appendChild(iframeElement);
             }, 11000);
+        }
+
+        window.onload = function () {
+            var warningElement = document.createElement("div");
+            warningElement.className = "PLEASE READ";
+            warningElement.innerText = "This fake jailbreak will show a clip of Kevin Leonardo's BARE ASS, US CREATORS ARE NOT RESPONSIBLE FOR ANY HARM, TRAUMA, AND/OR HATE WITH THE USE OF THIS PRANK WEBSITE! Please prank at your own risk!";
+            var containerElement = document.querySelector(".container");
+            containerElement.insertBefore(warningElement, containerElement.firstChild);
         }
     </script>
 </head>
