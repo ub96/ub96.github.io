@@ -2,10 +2,11 @@
 <html>
 
 <head>
-    <title>Jailbreaking App</title>
+    <title>Fake Jailbreaking App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: yellow;
         }
 
         .container {
@@ -36,7 +37,7 @@
             padding: 10px;
             margin-top: 20px;
             text-align: center;
-            background-color: #007bff;
+            background-color: gray;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -44,7 +45,7 @@
         }
 
         .button:hover {
-            background-color: #0056b3;
+            background-color: #999;
         }
 
         .toggle-label {
@@ -105,12 +106,26 @@
                     codeElement.innerHTML += "Installing Sileo\n";
                 }, 10000);
                 setTimeout(function () {
-                    codeElement.innerHTML += "Finishing Up\n";
+                    codeElement.innerHTML += "Using WebClip Exploit to get sileo working\n";
                 }, 11000);
                 setTimeout(function () {
+                    codeElement.innerHTML += "Installing ldid\n";
+                }, 12000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Installing MobileSubstrate (handles most crashes and tweaks)\n";
+                }, 13000);
+                setTimeout(function () {
+                    codeElement.innerHTML += "Cleaning up temporary files\n";
+                }, 14000);
+                setTimeout(function () {
                     codeElement.innerHTML += "Your jailbreak has finished!\n";
-                    triggerRickroll();
-                }, 11000);
+                    // Embed the link
+                    var iframeElement = document.createElement("iframe");
+                    iframeElement.src = "https://ub96.github.io/fakeJB/rick.mp4";
+                    iframeElement.width = "560";
+                    iframeElement.height = "315";
+                    codeElement.appendChild(iframeElement);
+                }, 15000);
             }
         }
 
@@ -122,7 +137,7 @@
 
             // Embed the Rickroll video
             var iframeElement = document.createElement("iframe");
-            iframeElement.src = "https://ub96.github.io/fakeJB/rick.html";
+            iframeElement.src = "https://ub96.github.io/fakeJB/rick.mp4";
             iframeElement.width = "560";
             iframeElement.height = "315";
             codeElement.appendChild(iframeElement);
@@ -145,7 +160,7 @@
         <h1>Bolt Jailbreak</h1>
         <p>Jailbreak for iOS 12.0 up to iOS 17 beta!</p>
         <div class="warning hide">
-            <p>This jailbreak is a rickroll and not an actual jailbreaking tool!</p>
+            <p>As seen in the reddit post in r/Jailbreak, You will know that this jailbreak is 100% fake!</p>
         </div>
         <button class="agree-button" onclick="agreeToWarning()">I Agree</button>
         <button class="button" onclick="runVerboseCode()">Lightning Now</button>
